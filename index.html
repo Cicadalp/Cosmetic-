@@ -732,73 +732,66 @@
 
         // ... existing JavaScript code ...
 
+// 🚨 IMPORTANT: REPLACE THIS URL with the Web app URL you got after deploying your Google Apps Script.
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxlMgwIGYa4t815zFFkvfhDcSDZyquxZeOZK2fOVjd8D2_PXGIavdy1x6tcjRT4r9XJ/exec'; 
+
 function handleSubmit() {
-    collectAnswers(); // This collects data into the 'answers' object
-
-    // Display the success popup while we wait for the server response
-    congratsPopup.style.display = 'flex';
+    collectAnswers(); // This collects data into the 'answers' object: {q1: 'value', q2: 'value', ...}
     
-    // 1. Prepare the data for submission
-    const submissionData = {
-        timestamp: new Date().toISOString(),
-        surveyResponses: answers
-    };
+    // Create a new FormData object. This is essential because the Google Apps Script doPost(e) 
+    // function expects data in the 'application/x-www-form-urlencoded' format, which FormData mimics.
+    const formData = new FormData();
+    formData.append('timestamp', new Date().toISOString()); 
 
-    // 2. Send the data to your serverless function
-    fetch('/.netlify/functions/submit-survey', {
+    // Loop through the collected answers and append them to the FormData object
+    // Key (Header) must match the question ID (e.g., 'q1', 'q2')
+    for (const id in answers) {
+        if (answers.hasOwnProperty(id)) {
+            let value = answers[id];
+            
+            // Handle array values (like checkboxes) by joining them into a single string 
+            // separated by commas, so it fits into one Google Sheet cell.
+            if (Array.isArray(value)) {
+                value = value.join(', ');
+            }
+            
+            // Append the key (q.id) and the value to the submission
+            formData.append(id, value);
+        }
+    }
+
+    // Display the success popup while we wait for the server response [cite: 188]
+    congratsPopup.style.display = 'flex';
+
+    // Send the data as a standard POST request
+    fetch(GAS_URL, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submissionData),
+        // Note: Do not manually set 'Content-Type' for FormData; the browser handles it 
+        body: formData, 
     })
     .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            // Handle server-side errors
-            throw new Error('Server submission failed: ' + response.statusText);
-        }
+        // The Apps Script returns a JSON object, so we parse it
+        return response.json();
     })
     .then(data => {
-        console.log("Submission Success:", data.message);
-        // Clear local storage or reset form if needed
-        setTimeout(() => {
-            congratsPopup.style.display = 'none';
-            alert("Merci pour vos réponses !");
-        }, 2000);
+        if (data.result === 'success') {
+            console.log("Submission Success:", data);
+            
+            setTimeout(() => {
+                congratsPopup.style.display = 'none'; // Hide success popup
+                alert("Merci pour vos réponses !"); // Show final alert
+                // You may want to redirect or reset the survey here
+            }, 2000);
+        } else {
+            throw new Error('Apps Script returned an error.');
+        }
     })
     .catch(error => {
         console.error('Submission Error:', error);
-        congratsPopup.style.display = 'none'; // Hide success on failure
-        alert("Une erreur est survenue. Veuillez réessayer.");
-    });
+        congratsPopup.style.display = 'none'; 
+        alert("Une erreur est survenue. Veuillez réessayer."); [cite ,"192"]
+    })
 }
-
-// Event listener (ensure this replaces the old one if it exists)
-submitBtn.addEventListener('click', handleSubmit);
-
-// ... existing JavaScript code ...
-
-        // Event listeners
-        nextBtn.addEventListener('click', handleNext);
-        prevBtn.addEventListener('click', handlePrevious);
-        submitBtn.addEventListener('click', handleSubmit);
-
-        // Event delegation for option selection
-        surveyContentEl.addEventListener('click', (e) => {
-            const label = e.target.closest('label');
-            if (label) {
-                const input = label.querySelector('input');
-                if (input.type === 'radio') {
-                    const allRadioLabels = document.querySelectorAll(`label[class="${input.type}-label"]`);
-                    allRadioLabels.forEach(lbl => lbl.classList.remove('selected'));
-                }
-                label.classList.toggle('selected', input.checked);
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', renderSection);
     </script>
 </body>
 </html>
