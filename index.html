@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afro-Australian Cosmetic Survey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4e5d6c;
+            --secondary-color: #b0c4de;
+            --text-color: #333;
+            --background-color: #f5f8ff;
+            --card-background: #ffffff;
+            --accent-color: #7395ae;
+            --success-color: #4CAF50;
+            --hover-color: #e6e6e6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #e0eafc, #cfdef3, #b0c4de, #7395ae);
+            background-size: 400% 400%;
+            animation: gradient-move 16s ease-in-out infinite;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+        }
+        @keyframes gradient-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .app-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #f8faff 0%, #e0eafc 100%);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header-container h1 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .header-container p {
+            font-size: 1.1em;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Gamified Mascot & Animation */
+        .mascot-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(115, 149, 174, 0.15);
+            background: #fff;
+            padding: 8px;
+            animation: mascot-bounce 1.2s infinite alternate;
+        }
+        .mascot-emoji {
+            font-size: 2.5em;
+            animation: mascot-emoji-pop 1.2s infinite alternate;
+        }
+        @keyframes mascot-bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        @keyframes mascot-emoji-pop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .app-container {
+                padding: 20px;
+            }
+            .section-container {
+                padding: 18px;
+            }
+            .header-container {
+                height: 180px;
+                padding: 10px;
+            }
+            .section-image {
+                height: 160px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+            .app-container {
+                padding: 8px;
+                border-radius: 10px;
+            }
+            .header-container {
+                height: auto !important;
+                min-height: 120px;
+                padding: 6px;
+                border-radius: 8px;
+            }
+            .header-container h1 {
+                font-size: 1.3em;
+                margin-bottom: 6px;
+            }
+            .header-container p {
+                font-size: 0.95em;
+            }
+            .section-container {
+                padding: 8px;
+                margin-bottom: 16px;
+                border-radius: 6px;
+            }
+            .section-container h2 {
+                font-size: 1.1em;
+                padding-bottom: 4px;
+                margin-bottom: 12px;
+            }
+            .question-container {
+                padding: 10px 6px;
+                border-radius: 8px;
+                margin-bottom: 18px;
+            }
+            .question-text {
+                font-size: 0.98em;
+                margin-left: 2px;
+            }
+            .options-container {
+                gap: 12px 10px;
+            }
+            .radio-label, .checkbox-label {
+                padding: 7px 10px;
+                font-size: 0.85em;
+                border-radius: 16px;
+            }
+            .radio-button, .checkbox-box {
+                width: 16px;
+                height: 16px;
+                margin-right: 6px;
+            }
+            .text-input, .dropdown-input {
+                padding: 8px 8px;
+                font-size: 0.95em;
+                border-radius: 6px;
+            }
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 18px;
+            }
+            .button-container button {
+                padding: 10px 18px;
+                font-size: 1em;
+                border-radius: 10px;
+            }
+            .footer-container p {
+                font-size: 0.9em;
+            }
+            .congrats-popup {
+                padding: 18px 12px;
+                border-radius: 12px;
+            }
+            .congrats-emoji {
+                font-size: 2em;
+            }
+            .congrats-text {
+                font-size: 1em;
+            }
+            .section-image {
+                height: 90px !important;
+            }
+        }
+            .question-container {
+                padding: 10px 6px;
+                border-radius: 8px;
+                margin-bottom: 18px;
+            }
+            .question-text {
+                font-size: 0.98em;
+                margin-left: 2px;
+            }
+            .options-container {
+                gap: 12px 10px;
+            }
+            .radio-label, .checkbox-label {
+                padding: 7px 10px;
+                font-size: 0.85em;
+                border-radius: 16px;
+            }
+            .radio-button, .checkbox-box {
+                width: 16px;
+                height: 16px;
+                margin-right: 6px;
+            }
+            .text-input, .dropdown-input {
+                padding: 8px 8px;
+                font-size: 0.95em;
+                border-radius: 6px;
+            }
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 18px;
+            }
+            .button-container button {
+                padding: 10px 18px;
+                font-size: 1em;
+                border-radius: 10px;
+            }
+            .footer-container p {
+                font-size: 0.9em;
+            }
+            .congrats-popup {
+                padding: 18px 12px;
+                border-radius: 12px;
+            }
+            .congrats-emoji {
+                font-size: 2em;
+            }
+            .congrats-text {
+                font-size: 1em;
+            }
+            .section-image {
+                height: 90px !important;
+            
+        
+            letter-spacing: 0.3px;
+            text-shadow: 0 1px 0 #fff;
+            transition: color 0.2s;
+        }
+
+        /* Options Styling (Radio/Checkbox) */
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px 32px;
+            margin-top: 10px;
+        }
+        .radio-label, .checkbox-label {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            transition: all 0.2s ease-in-out;
+            background-color: #fafafa;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+        .radio-label:hover, .checkbox-label:hover {
+            border-color: var(--accent-color);
+            background: linear-gradient(90deg, #e0eafc 0%, #b0c4de 100%);
+            box-shadow: 0 4px 16px rgba(115, 149, 174, 0.13);
+            transform: scale(1.06);
+        }
+
+        .radio-label.selected,
+        .checkbox-label.selected {
+            background: linear-gradient(90deg, #b0c4de 0%, #7395ae 100%);
+            color: #fff;
+            box-shadow: 0 0 12px #7395ae55;
+            transform: scale(1.08);
+            font-weight: 700;
+            transition: all 0.25s cubic-bezier(.68,-0.55,.27,1.55);
+            animation: radio-label-pop 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes radio-label-pop {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .radio-label input[type="radio"], .checkbox-label input[type="checkbox"] {
+            display: none;
+        }
+        .radio-button, .checkbox-box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #7395ae;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 12px;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 1px 4px rgba(115, 149, 174, 0.10);
+            transition: all 0.2s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        .checkbox-box {
+            border-radius: 8px;
+        }
+        input[type="radio"]:checked + .radio-button::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, var(--accent-color) 70%, #fff 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0 0 8px #7395ae44;
+            animation: radio-check-pop 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes radio-check-pop {
+            0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+        input[type="checkbox"]:checked + .checkbox-box::after {
+            content: '✓';
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent-color) 60%, #7395ae 100%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 0 8px #7395ae44;
+            animation: checkbox-check-pop 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes checkbox-check-pop {
+            0% { transform: scale(0.7); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Input Fields */
+        .text-input, .dropdown-input {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        .text-input:focus, .dropdown-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(115, 149, 174, 0.5);
+        }
+        .text-group-container {
+            display: grid;
+            gap: 20px;
+        }
+        .text-group-field label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Button Styling */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        .button-container button {
+            padding: 14px 32px;
+            background: linear-gradient(90deg, #7395ae 0%, #b0c4de 100%);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(115, 149, 174, 0.10);
+            transition: background 0.2s, transform 0.2s;
+            animation: btn-pop 1.2s infinite alternate;
+        }
+        .button-container button:hover {
+            background: linear-gradient(90deg, #4e5d6c 0%, #7395ae 100%);
+            transform: scale(1.09);
+        }
+        @keyframes btn-pop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.07); }
+        }
+
+        /* Footer Styling */
+        .footer-container {
+            text-align: center;
+        }
+        .footer-container p {
+            color: #555;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        /* Gamified congrats popup */
+        .congrats-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #fff6b7 0%, #f6416c 100%);
+            color: #333;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(246, 65, 108, 0.15);
+            padding: 32px 48px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: congrats-pop 0.7s ease;
+        }
+        .congrats-emoji {
+            font-size: 3em;
+            margin-bottom: 12px;
+            animation: mascot-emoji-pop 1.2s infinite alternate;
+        }
+        .congrats-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #f6416c;
+        }
+        @keyframes congrats-pop {
+            0% { opacity: 0; transform: scale(0.7) translate(-50%, -50%); }
+            100% { opacity: 1; transform: scale(1) translate(-50%, -50%); }
+        }
+        /* Section Image Styling */
+        .section-image-container {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .section-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Header Background Slideshow */
+        .header-container {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative; /* Needed for absolute positioning of the pseudo-element */
+            overflow: hidden; /* Hides the part of the image not in view */
+            height: 250px; /* Set a fixed height to contain the background images */
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            display: flex; /* For centering content */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+            z-index: 1; /* Places the overlay above the images but below the text */
+        }
+
+        .header-container h1,
+        .header-container p {
+            position: relative;
+            z-index: 2; /* Ensures text is above the overlay */
+            color: #ffffff; /* Change text color to white for readability */
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="mascot-container">
+            <img src="./assets/react.svg" alt="Mascot" class="mascot-img">
+            <span class="mascot-emoji" id="mascot-emoji" role="img" aria-label="mascot">✨</span>
+        </div>
+        <div class="header-container">
+            <div id="header-bg-slideshow"></div>
+            <h1>Afro-Australian Cosmetic Line: Consumer Insights Survey</h1>
+            <p>We're developing a new line of premium beauty products that blend the best natural ingredients from Africa and Australia. Your feedback will directly shape our formulations and help us create products that truly meet your needs.</p>
+        </div>
+
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+            <span id="progress-text" class="progress-text">0/5</span>
+        </div>
+
+        <div class="survey-form">
+            <div id="survey-content"></div>
+            <div class="button-container">
+                <button id="prev-btn" class="game-btn" style="display: none;">⬅️ Précédent</button>
+                <button id="next-btn" class="game-btn">Suivant ➡️</button>
+                <button id="submit-btn" class="game-btn" style="display: none;">Soumettre</button>
+            </div>
+        </div>
+
+        <div id="congrats-popup" class="congrats-popup" style="display: none;">
+            <span role="img" aria-label="congrats" class="congrats-emoji">🎊</span>
+            <span class="congrats-text">Bravo, tu as terminé !</span>
+        </div>
+    </div>
+
+    <script>
+        const surveyData = {
+            title: "Afro-Australian Cosmetic Line: Consumer Insights Survey",
+            description: "We're developing a new line of premium beauty products that blend the best natural ingredients from Africa and Australia. Your feedback will directly shape our formulations and help us create products that truly meet your needs.",
+            sections: [
+                {
+                    title: "Section 1: About You",
+                    questions: [
+                        { id: "q1", text: "1. Age Group:", type: "radio", options: ["Under 18", "18-24", "25-34", "35-44", "45-54", "55+"] },
+                        { id: "q2", text: "2. Location:", type: "text" },
+                        { id: "q3", text: "3. Which best describes your lifestyle? (Select all that apply)", type: "checkbox", options: ["Busy & always on-the-go", "Health and wellness focused", "Minimalist / simple", "Active / sporty", "Trend-conscious / fashionable", "Other:"] },
+                        { id: "q4", text: "4. How important are natural and organic ingredients to you?", type: "radio", options: ["Not important", "Slightly important", "Important", "Very Important", "Essential - I only buy natural/organic"] }
+                    ]
+                },
+                {
+                    title: "Section 2: Your Skin & Hair Profile",
+                    questions: [
+                        { id: "q5", text: "5. What is your skin type?", type: "radio", options: ["Oily", "Dry", "Combination", "Normal", "Sensitive"] },
+                        { id: "q6", text: "6. What is your hair type/texture?", type: "text" },
+                        { id: "q7", text: "7. What are your TOP 3 skin concerns? (Select up to 3)", type: "checkbox", options: ["Acne/breakouts", "Dark spots/hyperpigmentation", "Dryness/flakiness", "Oiliness/shine", "Fine lines/wrinkles", "Dullness", "Redness/irritation", "Large pores", "Uneven skin tone", "Other:"] },
+                        { id: "q8", text: "8. What are your TOP 3 hair concerns? (Select up to 3)", type: "checkbox", options: ["Dryness", "Breakage/split ends", "Scalp issues (dandruff, itchiness)", "Slow growth", "Lack of curl definition", "Frizz", "Damage from heat/chemicals", "Thinning", "Tangling", "Other:"] }
+                    ]
+                },
+                {
+                    title: "Section 3: Your Beauty Habits",
+                    questions: [
+                        { id: "q9", text: "9. Where do you typically shop for beauty products? (Select all that apply)", type: "checkbox", options: ["Pharmacies/drugstores", "Beauty salons", "Supermarkets", "Online marketplaces (Amazon, Jumia, etc.)", "Brand websites", "Social media sellers", "Local markets", "Specialty beauty stores", "Department stores"] },
+                        { id: "q10", text: "10. On average, how much do you spend monthly on skincare AND haircare?", type: "radio", options: ["Less than 10,000 XAF / $20 AUD", "10,000 - 30,000 XAF / $20 - $60 AUD", "30,000 - 50,000 XAF / $60 - $100 AUD", "More than 50,000 XAF / $100 AUD"] },
+                        { id: "q11", text: "11. How often do you purchase new beauty products?", type: "radio", options: ["Weekly", "Monthly", "Every 2-3 months", "Every 4-6 months", "Only when I run out", "Rarely"] }
+                    ]
+                },
+                {
+                    title: "Section 4: Product Preferences",
+                    questions: [
+                        { id: "q12", text: "12. How appealing is the concept of combining African & Australian natural ingredients?", type: "radio", options: ["Not appealing at all", "Slightly appealing", "Neutral", "Appealing", "Very appealing"] },
+                        { id: "q13", text: "13. Which product types interest you most? (Rank your top 3)", type: "checkbox", options: ["Moisturizing creams/lotions", "Hair growth serums/oils", "Shampoo & conditioner sets", "Face masks", "Body butters/scrubs", "Scalp treatments", "Leave-in conditioners", "Cleansers & toners", "Styling products", "Lip care"] },
+                        { id: "q14", text: "14. What's MOST important when choosing beauty products?", type: "radio", options: ["Ingredients quality", "Brand reputation", "Price/value", "Recommendations/reviews", "Packaging", "Effectiveness/results", "Natural/organic certification"] },
+                        { id: "q15", text: "15. What scent profiles do you prefer? (Select all that apply)", type: "checkbox", options: ["Fresh & herbal (eucalyptus, mint, tea tree)", "Floral (lavender, rose, jasmine)", "Woody & earthy (sandalwood, cedarwood)", "Fruity & sweet (coconut, vanilla, citrus)", "Unscented/fragrance-free"] },
+                        { id: "q16", text: "16. How important is eco-friendly/sustainable packaging?", type: "radio", options: ["Not important", "Slightly important", "Important", "Very important", "Essential"] }
+                    ]
+                },
+                {
+                    title: "Section 5: The Afro-Australian Concept",
+                    questions: [
+                        { id: "q17", text: "17. What African ingredients are you most familiar with? (Select all that apply)", type: "checkbox", options: ["Shea butter", "Baobab oil", "Marula oil", "Argan oil", "African black soap", "Cocoa butter", "Other:"] },
+                        { id: "q18", text: "18. What Australian ingredients interest you most? (Select all that apply)", type: "checkbox", options: ["Tea tree oil", "Macadamia oil", "Kakadu plum", "Eucalyptus", "Emu oil", "Other:"] },
+                        { id: "q19", text: "19. What benefits are most important in your beauty products? (Select top 3)", type: "checkbox", options: ["Deep hydration/moisture", "Natural healing properties", "Anti-aging effects", "Brightening/even tone", "Soothing sensitive skin", "Strengthening hair", "Protecting from environmental damage", "Lightweight feel (not greasy)", "Quick absorption", "Long-lasting results"] },
+                        { id: "q20", text: "20. What price point feels right for premium natural products?", type: "radio", options: ["Budget-friendly (under 15,000 XAF / $30 AUD)", "Mid-range (15,000-35,000 XAF / $30-$70 AUD)", "Premium (35,000-60,000 XAF / $70-$120 AUD)", "Luxury (over 60,000 XAF / $120 AUD)"] },
+                        { id: "q21", text: "21. Would you like to participate further?", type: "checkbox", options: ["Yes, I'd like to be a product tester", "Yes, I'm interested in the Beauty Ambassador contest", "Yes, notify me when products launch", "No, just completing the survey"], extraFields: true }
+                    ]
+                }
+            ]
+        };
+
+        let currentSectionIndex = 0;
+        const answers = {};
+
+        const mascotEmojis = ["✨", "💄", "👑", "💖", "🌸", "🧖‍♀️", "💅", "👩🏾‍🦱", "👩🏽‍🦱", "💁🏾‍♀️", "💁🏽‍♀️"];
+
+        const surveyContentEl = document.getElementById('survey-content');
+        const progressBarEl = document.getElementById('progress-bar');
+        const progressTextEl = document.getElementById('progress-text');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const congratsPopup = document.getElementById('congrats-popup');
+        const mascotEmojiEl = document.getElementById('mascot-emoji');
+
+        function renderSection() {
+            const currentSection = surveyData.sections[currentSectionIndex];
+            surveyContentEl.innerHTML = ''; // Clear previous content
+
+            // Create section container
+            const sectionContainer = document.createElement('div');
+            sectionContainer.className = 'section-container';
+
+            const sectionTitle = document.createElement('h2');
+            sectionTitle.textContent = currentSection.title;
+            sectionContainer.appendChild(sectionTitle);
+
+            currentSection.questions.forEach(q => {
+                const questionContainer = document.createElement('div');
+                questionContainer.className = 'question-container';
+
+                const questionText = document.createElement('p');
+                questionText.className = 'question-text';
+                questionText.textContent = q.text;
+                questionContainer.appendChild(questionText);
+
+                // Create options based on question type
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options-container';
+
+                if (q.type === 'radio' || q.type === 'checkbox') {
+                    q.options.forEach(option => {
+                        const label = document.createElement('label');
+                        label.className = `${q.type}-label`;
+
+                        const input = document.createElement('input');
+                        input.type = q.type;
+                        input.name = q.id;
+                        input.value = option;
+
+                        const buttonSpan = document.createElement('span');
+                        buttonSpan.className = `${q.type}-box`;
+
+                        label.appendChild(input);
+                        label.appendChild(buttonSpan);
+                        label.appendChild(document.createTextNode(option));
+
+                        optionsContainer.appendChild(label);
+
+                        // Set the selected state from `answers` object
+                        if (q.type === 'radio' && answers[q.id] === option) {
+                            input.checked = true;
+                            label.classList.add('selected');
+                        } else if (q.type === 'checkbox' && answers[q.id] && answers[q.id].includes(option)) {
+                            input.checked = true;
+                            label.classList.add('selected');
+                        }
+                    });
+                } else if (q.type === 'text') {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = q.id;
+                    input.className = 'text-input';
+                    input.value = answers[q.id] || '';
+                    optionsContainer.appendChild(input);
+                }
+                
+                questionContainer.appendChild(optionsContainer);
+                sectionContainer.appendChild(questionContainer);
+            });
+
+            surveyContentEl.appendChild(sectionContainer);
+            updateProgressBar();
+            updateButtons();
+            updateMascotEmoji();
+        }
+
+        function updateProgressBar() {
+            const totalSections = surveyData.sections.length;
+            const progressPercentage = ((currentSectionIndex + 1) / totalSections) * 100;
+            progressBarEl.style.width = `${progressPercentage}%`;
+            progressTextEl.textContent = `${currentSectionIndex + 1}/${totalSections}`;
+        }
+
+        function updateButtons() {
+            prevBtn.style.display = currentSectionIndex > 0 ? 'inline-block' : 'none';
+            if (currentSectionIndex === surveyData.sections.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function updateMascotEmoji() {
+            mascotEmojiEl.textContent = mascotEmojis[currentSectionIndex % mascotEmojis.length];
+        }
+
+        function collectAnswers() {
+            const currentSection = surveyData.sections[currentSectionIndex];
+            currentSection.questions.forEach(q => {
+                if (q.type === 'radio') {
+                    const checkedRadio = document.querySelector(`input[name="${q.id}"]:checked`);
+                    if (checkedRadio) {
+                        answers[q.id] = checkedRadio.value;
+                    }
+                } else if (q.type === 'checkbox') {
+                    const checkedCheckboxes = document.querySelectorAll(`input[name="${q.id}"]:checked`);
+                    answers[q.id] = Array.from(checkedCheckboxes).map(input => input.value);
+                } else if (q.type === 'text') {
+                    const textInput = document.querySelector(`input[name="${q.id}"]`);
+                    if (textInput) {
+                        answers[q.id] = textInput.value;
+                    }
+                }
+            });
+        }
+
+        function animateSection(direction) {
+            surveyContentEl.style.transition = 'none';
+            if (direction === 'next') {
+                surveyContentEl.style.transform = 'translateX(-100vw)';
+                setTimeout(() => {
+                    renderSection();
+                    surveyContentEl.style.transition = 'transform 0.6s ease-out';
+                    surveyContentEl.style.transform = 'translateX(0)';
+                }, 100);
+            } else {
+                surveyContentEl.style.transform = 'translateX(100vw)';
+                setTimeout(() => {
+                    renderSection();
+                    surveyContentEl.style.transition = 'transform 0.6s ease-out';
+                    surveyContentEl.style.transform = 'translateX(0)';
+                }, 100);
+            }
+        }
+
+        function handleNext() {
+            collectAnswers();
+            currentSectionIndex++;
+            animateSection('next');
+        }
+
+        function handlePrevious() {
+            collectAnswers();
+            currentSectionIndex--;
+            animateSection('prev');
+        }
+
+        // ... existing JavaScript code ...
+
+function handleSubmit() {
+    collectAnswers(); // This collects data into the 'answers' object
+
+    // Display the success popup while we wait for the server response
+    congratsPopup.style.display = 'flex';
+    
+    // 1. Prepare the data for submission
+    const submissionData = {
+        timestamp: new Date().toISOString(),
+        surveyResponses: answers
+    };
+
+    // 2. Send the data to your serverless function
+    fetch('/.netlify/functions/submit-survey', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            // Handle server-side errors
+            throw new Error('Server submission failed: ' + response.statusText);
+        }
+    })
+    .then(data => {
+        console.log("Submission Success:", data.message);
+        // Clear local storage or reset form if needed
+        setTimeout(() => {
+            congratsPopup.style.display = 'none';
+            alert("Merci pour vos réponses !");
+        }, 2000);
+    })
+    .catch(error => {
+        console.error('Submission Error:', error);
+        congratsPopup.style.display = 'none'; // Hide success on failure
+        alert("Une erreur est survenue. Veuillez réessayer.");
+    });
+}
+
+// Event listener (ensure this replaces the old one if it exists)
+submitBtn.addEventListener('click', handleSubmit);
+
+// ... existing JavaScript code ...
+
+        // Event listeners
+        nextBtn.addEventListener('click', handleNext);
+        prevBtn.addEventListener('click', handlePrevious);
+        submitBtn.addEventListener('click', handleSubmit);
+
+        // Event delegation for option selection
+        surveyContentEl.addEventListener('click', (e) => {
+            const label = e.target.closest('label');
+            if (label) {
+                const input = label.querySelector('input');
+                if (input.type === 'radio') {
+                    const allRadioLabels = document.querySelectorAll(`label[class="${input.type}-label"]`);
+                    allRadioLabels.forEach(lbl => lbl.classList.remove('selected'));
+                }
+                label.classList.toggle('selected', input.checked);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', renderSection);
+    </script>
+</body>
+</html>
