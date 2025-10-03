@@ -1,0 +1,2 @@
+- [x] Modify handleSubmit function in index.html to reset survey state after successful submission
+- [ ] Test the fix by launching the app and verifying questions appear after reload

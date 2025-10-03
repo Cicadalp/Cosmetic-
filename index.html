@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afro-Australian Cosmetic Survey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4e5d6c;
+            --secondary-color: #b0c4de;
+            --text-color: #333;
+            --background-color: #f5f8ff;
+            --card-background: #ffffff;
+            --accent-color: #7395ae;
+            --success-color: #4CAF50;
+            --hover-color: #e6e6e6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #e0eafc, #cfdef3, #b0c4de, #7395ae);
+            background-size: 400% 400%;
+            animation: gradient-move 16s ease-in-out infinite;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+        }
+        @keyframes gradient-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .app-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #f8faff 0%, #e0eafc 100%);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Progress Bar Styling */
+        .progress-container {
+            width: 100%;
+            background-color: #e0eafc;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .progress-bar {
+            height: 20px;
+            background: linear-gradient(90deg, var(--accent-color) 0%, #7395ae 100%);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        /* Header Background Slideshow */
+        .header-container {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .header-images {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+        }
+        .header-images img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .header-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(40, 40, 60, 0.45);
+            z-index: 1;
+        }
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .header-container h1,
+        .header-container p {
+            color: #fff;
+            text-shadow: 1px 1px 8px rgba(0,0,0,0.45);
+        }
+        .header-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .header-container p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* Gamified Mascot & Animation */
+        .mascot-container {
+            position: relative;
+        }
+        .mascot-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(115, 149, 174, 0.15);
+            background: #fff;
+            padding: 8px;
+            animation: mascot-bounce 1.2s infinite alternate;
+        }
+        .mascot-emoji {
+            font-size: 2.5em;
+            animation: mascot-emoji-pop 1.2s infinite alternate;
+        }
+        #streak-counter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.8);
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
+        }
+        .radio-label, .checkbox-label {
+            min-height: 44px;
+        }
+        @keyframes mascot-bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        @keyframes mascot-emoji-pop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .app-container {
+                padding: 20px;
+            }
+            .section-container {
+                padding: 18px;
+            }
+            .header-container {
+                height: 180px;
+                padding: 10px;
+            }
+            .section-image {
+                height: 160px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+            .app-container {
+                padding: 8px;
+                border-radius: 10px;
+            }
+            .header-container {
+                height: auto !important;
+                min-height: 120px;
+                padding: 6px;
+                border-radius: 8px;
+            }
+            .header-container h1 {
+                font-size: 1.3em;
+                margin-bottom: 6px;
+            }
+            .header-container p {
+                font-size: 0.95em;
+            }
+            .section-container {
+                padding: 8px;
+                margin-bottom: 16px;
+                border-radius: 6px;
+            }
+            .section-container h2 {
+                font-size: 1.1em;
+                padding-bottom: 4px;
+                margin-bottom: 12px;
+            }
+            .question-container {
+                padding: 10px 6px;
+                border-radius: 8px;
+                margin-bottom: 18px;
+            }
+            .question-text {
+                font-size: 0.98em;
+                margin-left: 2px;
+            }
+            .options-container {
+                gap: 12px 10px;
+            }
+            .radio-label, .checkbox-label {
+                padding: 7px 10px;
+                font-size: 0.85em;
+                border-radius: 16px;
+            }
+            .radio-button, .checkbox-box {
+                width: 16px;
+                height: 16px;
+                margin-right: 6px;
+            }
+            .text-input, .dropdown-input {
+                padding: 8px 8px;
+                font-size: 0.95em;
+                border-radius: 6px;
+            }
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 18px;
+            }
+            .button-container button {
+                padding: 10px 18px;
+                font-size: 1em;
+                border-radius: 10px;
+            }
+            .footer-container p {
+                font-size: 0.9em;
+            }
+            .congrats-popup {
+                padding: 18px 12px;
+                border-radius: 12px;
+            }
+            .congrats-emoji {
+                font-size: 2em;
+            }
+            .congrats-text {
+                font-size: 1em;
+            }
+            .section-image {
+                height: 90px !important;
+            }
+        }
+
+        /* Options Styling (Radio/Checkbox) */
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px 32px;
+            margin-top: 10px;
+        }
+        .radio-label, .checkbox-label {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            transition: all 0.2s ease-in-out;
+            background-color: #fafafa;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+        .radio-label:hover, .checkbox-label:hover {
+            border-color: var(--accent-color);
+            background: linear-gradient(90deg, #e0eafc 0%, #b0c4de 100%);
+            box-shadow: 0 4px 16px rgba(115, 149, 174, 0.13);
+            transform: scale(1.06);
+        }
+
+        .radio-label.selected,
+        .checkbox-label.selected {
+            background: linear-gradient(90deg, #b0c4de 0%, #7395ae 100%);
+            color: #fff;
+            box-shadow: 0 0 12px #7395ae55;
+            transform: scale(1.08);
+            font-weight: 700;
+            transition: all 0.25s cubic-bezier(.68,-0.55,.27,1.55);
+            animation: radio-label-pop 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes radio-label-pop {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .radio-label input[type="radio"], .checkbox-label input[type="checkbox"] {
+            display: none;
+        }
+        .radio-button, .checkbox-box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #7395ae;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 12px;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 1px 4px rgba(115, 149, 174, 0.10);
+            transition: all 0.2s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        .checkbox-box {
+            border-radius: 8px;
+        }
+        input[type="radio"]:checked + .radio-button::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, var(--accent-color) 70%, #fff 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0 0 8px #7395ae44;
+            animation: radio-check-pop 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes radio-check-pop {
+            0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+        input[type="checkbox"]:checked + .checkbox-box::after {
+            content: '✓';
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent-color) 60%, #7395ae 100%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 0 8px #7395ae44;
+            animation: checkbox-check-pop 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes checkbox-check-pop {
+            0% { transform: scale(0.7); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Input Fields */
+        .text-input, .dropdown-input {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        .text-input:focus, .dropdown-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(115, 149, 174, 0.5);
+        }
+        .text-group-container {
+            display: grid;
+            gap: 20px;
+        }
+        .text-group-field label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Extra Fields Styling for q21 */
+        .extra-fields-container {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8faff 0%, #e0eafc 100%);
+            border-radius: 12px;
+            border: 1px solid var(--secondary-color);
+        }
+        .extra-header {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            font-size: 1em;
+        }
+        .extra-fields-container label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        .extra-fields-container input {
+            width: 100%;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95em;
+            box-sizing: border-box;
+        }
+        .extra-fields-container input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(115, 149, 174, 0.3);
+        }
+
+        /* Button Styling */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        .button-container button {
+            padding: 14px 32px;
+            background: linear-gradient(90deg, #7395ae 0%, #b0c4de 100%);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(115, 149, 174, 0.10);
+            transition: background 0.2s, transform 0.2s;
+            animation: btn-pop 1.2s infinite alternate;
+        }
+        .button-container button:hover {
+            background: linear-gradient(90deg, #4e5d6c 0%, #7395ae 100%);
+            transform: scale(1.09);
+        }
+        @keyframes btn-pop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.07); }
+        }
+
+        /* Footer Styling */
+        .footer-container {
+            text-align: center;
+        }
+        .footer-container p {
+            color: #555;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        /* Gamified congrats popup */
+        .congrats-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #fff6b7 0%, #f6416c 100%);
+            color: #333;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(246, 65, 108, 0.15);
+            padding: 32px 48px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: congrats-pop 0.7s ease;
+        }
+        .congrats-emoji {
+            font-size: 3em;
+            margin-bottom: 12px;
+            animation: mascot-emoji-pop 1.2s infinite alternate;
+        }
+        .congrats-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #f6416c;
+        }
+        @keyframes congrats-pop {
+            0% { opacity: 0; transform: scale(0.7) translate(-50%, -50%); }
+            100% { opacity: 1; transform: scale(1) translate(-50%, -50%); }
+        }
+        /* Section Image Styling */
+        .section-image-container {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .section-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Feedback Container Styling */
+        .feedback-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(115, 149, 174, 0.15);
+            animation: feedbackFadeIn 0.5s ease-out;
+        }
+        @keyframes feedbackFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .feedback-emoji {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+        .feedback-word {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+        .feedback-image {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        .continue-text {
+            font-size: 0.9em;
+            color: #555;
+            font-style: italic;
+        }
+
+        /* Header Background Slideshow */
+        .header-container {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative; /* Needed for absolute positioning of the pseudo-element */
+            overflow: hidden; /* Hides the part of the image not in view */
+            height: 250px; /* Set a fixed height to contain the background images */
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            display: flex; /* For centering content */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+            z-index: 1; /* Places the overlay above the images but below the text */
+        }
+
+        .header-container h1,
+        .header-container p {
+            position: relative;
+            z-index: 2; /* Ensures text is above the overlay */
+            color: #ffffff; /* Change text color to white for readability */
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="mascot-container">
+            <img src="./assets/react.svg" alt="Mascot" class="mascot-img">
+            <span class="mascot-emoji" id="mascot-emoji" role="img" aria-label="mascot">✨</span>
+            <div id="streak-counter" style="display: none;">Streak: <span id="streak-count">0</span></div>
+        </div>
+        <div class="header-container">
+            <div class="header-images">
+                <img src="./assets/Woman.jpg" alt="Header Image">
+            </div>
+            <div class="header-content">
+                <h1>Afro-Australian Cosmetic Line: Consumer Insights Survey</h1>
+                <p>We're developing a new line of premium beauty products that blend the best natural ingredients from Africa and Australia. Your feedback will directly shape our formulations and help us create products that truly meet your needs.</p>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+            <span id="progress-text" class="progress-text">0/5</span>
+        </div>
+
+        <div class="survey-form">
+            <div id="survey-content"></div>
+            <div class="button-container">
+                <button id="prev-btn" class="game-btn" style="display: none;" aria-label="Previous section">⬅️ Previous</button>
+                <button id="next-btn" class="game-btn" aria-label="Next section">Next ➡️</button>
+                <button id="submit-btn" class="game-btn" style="display: none;" aria-label="Submit survey">Submit</button>
+            </div>
+        </div>
+
+        <div id="congrats-popup" class="congrats-popup" style="display: none;">
+            <span role="img" aria-label="congrats" class="congrats-emoji">🎊</span>
+            <span class="congrats-text">Congratulations, you have completed the survey!</span>
+        </div>
+    </div>
+
+    <script>
+        const surveyData = {
+            title: "Afro-Australian Cosmetic Line: Consumer Insights Survey",
+            description: "We're developing a new line of premium beauty products that blend the best natural ingredients from Africa and Australia. Your feedback will directly shape our formulations and help us create products that truly meet your needs.",
+            sections: [
+                {
+                    title: "Section 1: About You",
+                    questions: [
+                        { id: "q1", text: "1. Age Group:", type: "radio", options: ["Under 18", "18-24", "25-34", "35-44", "45-54", "55+"], required: true },
+                        { id: "q2", text: "2. Location:", type: "text", placeholder: "e.g., Cameroon, Australia", required: true },
+                        { id: "q3", text: "3. Which best describes your lifestyle? (Select all that apply)", type: "checkbox", options: ["Busy & always on-the-go", "Health and wellness focused", "Minimalist / simple", "Active / sporty", "Trend-conscious / fashionable", "Other:"], required: true },
+                        { id: "q4", text: "4. How important are natural and organic ingredients to you?", type: "radio", options: ["Not important", "Slightly important", "Important", "Very Important", "Essential - I only buy natural/organic"], required: true }
+                    ]
+                },
+                {
+                    title: "Section 2: Your Skin & Hair Profile",
+                    questions: [
+                        { id: "q5", text: "5. What is your skin type?", type: "radio", options: ["Oily", "Dry", "Combination", "Normal", "Sensitive"], required: true },
+                        { id: "q6", text: "6. What is your hair type/texture?", type: "text", placeholder: "e.g., Curly, Straight, Wavy", required: true },
+                        { id: "q7", text: "7. What are your TOP 3 skin concerns? (Select up to 3)", type: "checkbox", options: ["Acne/breakouts", "Dark spots/hyperpigmentation", "Dryness/flakiness", "Oiliness/shine", "Fine lines/wrinkles", "Dullness", "Redness/irritation", "Large pores", "Uneven skin tone", "Other:"], required: true },
+                        { id: "q8", text: "8. What are your TOP 3 hair concerns? (Select up to 3)", type: "checkbox", options: ["Dryness", "Breakage/split ends", "Scalp issues (dandruff, itchiness)", "Slow growth", "Lack of curl definition", "Frizz", "Damage from heat/chemicals", "Thinning", "Tangling", "Other:"], required: true }
+                    ]
+                },
+                {
+                    title: "Section 3: Your Beauty Habits",
+                    questions: [
+                        { id: "q9", text: "9. Where do you typically shop for beauty products? (Select all that apply)", type: "checkbox", options: ["Pharmacies/drugstores", "Beauty salons", "Supermarkets", "Online marketplaces (Amazon, Jumia, etc.)", "Brand websites", "Social media sellers", "Local markets", "Specialty beauty stores", "Department stores"], required: true },
+                        { id: "q10", text: "10. On average, how much do you spend monthly on skincare AND haircare?", type: "radio", options: ["Less than 10,000 XAF / $20 AUD", "10,000 - 30,000 XAF / $20 - $60 AUD", "30,000 - 50,000 XAF / $60 - $100 AUD", "More than 50,000 XAF / $100 AUD"], required: true },
+                        { id: "q11", text: "11. How often do you purchase new beauty products?", type: "radio", options: ["Weekly", "Monthly", "Every 2-3 months", "Every 4-6 months", "Only when I run out", "Rarely"], required: true }
+                    ]
+                },
+                {
+                    title: "Section 4: Product Preferences",
+                    questions: [
+                        { id: "q12", text: "12. How appealing is the concept of combining African & Australian natural ingredients?", type: "radio", options: ["Not appealing at all", "Slightly appealing", "Neutral", "Appealing", "Very appealing"], required: true },
+                        { id: "q13", text: "13. Which product types interest you most? (Rank your top 3)", type: "checkbox", options: ["Moisturizing creams/lotions", "Hair growth serums/oils", "Shampoo & conditioner sets", "Face masks", "Body butters/scrubs", "Scalp treatments", "Leave-in conditioners", "Cleansers & toners", "Styling products", "Lip care"], required: true },
+                        { id: "q14", text: "14. What's MOST important when choosing beauty products?", type: "radio", options: ["Ingredients quality", "Brand reputation", "Price/value", "Recommendations/reviews", "Packaging", "Effectiveness/results", "Natural/organic certification"], required: true },
+                        { id: "q15", text: "15. What scent profiles do you prefer? (Select all that apply)", type: "checkbox", options: ["Fresh & herbal (eucalyptus, mint, tea tree)", "Floral (lavender, rose, jasmine)", "Woody & earthy (sandalwood, cedarwood)", "Fruity & sweet (coconut, vanilla, citrus)", "Unscented/fragrance-free"], required: true },
+                        { id: "q16", text: "16. How important is eco-friendly/sustainable packaging?", type: "radio", options: ["Not important", "Slightly important", "Important", "Very important", "Essential"], required: true }
+                    ]
+                },
+                {
+                    title: "Section 5: The Afro-Australian Concept",
+                    questions: [
+                        { id: "q17", text: "17. What African ingredients are you most familiar with? (Select all that apply)", type: "checkbox", options: ["Shea butter", "Baobab oil", "Marula oil", "Argan oil", "African black soap", "Cocoa butter", "Other:"], required: true },
+                        { id: "q18", text: "18. What Australian ingredients interest you most? (Select all that apply)", type: "checkbox", options: ["Tea tree oil", "Macadamia oil", "Kakadu plum", "Eucalyptus", "Emu oil", "Other:"], required: true },
+                        { id: "q19", text: "19. What benefits are most important in your beauty products? (Select top 3)", type: "checkbox", options: ["Deep hydration/moisture", "Natural healing properties", "Anti-aging effects", "Brightening/even tone", "Soothing sensitive skin", "Strengthening hair", "Protecting from environmental damage", "Lightweight feel (not greasy)", "Quick absorption", "Long-lasting results"], required: true },
+                        { id: "q20", text: "20. What price point feels right for premium natural products?", type: "radio", options: ["Budget-friendly (under 15,000 XAF / $30 AUD)", "Mid-range (15,000-35,000 XAF / $30-$70 AUD)", "Premium (35,000-60,000 XAF / $70-$120 AUD)", "Luxury (over 60,000 XAF / $120 AUD)"], required: true },
+                        { id: "q21", text: "21. Would you like to participate further?", type: "checkbox", options: ["Yes, I'd like to be a product tester", "Yes, I'm interested in the Beauty Ambassador contest", "Yes, notify me when products launch", "No, just completing the survey"], extraFields: true, required: true }
+                    ]
+                }
+            ]
+        };
+
+        let currentSectionIndex = 0;
+        let answers = {};
+        let score = 0;
+        let visits = 0;
+
+        const mascotEmojis = ["✨", "💄", "👑", "💖", "🌸", "🧖‍♀️", "💅", "👩🏾‍🦱", "👩🏽‍🦱", "💁🏾‍♀️", "💁🏽‍♀️"];
+
+        // Feedback mappings for each question
+        const feedbackMap = {
+            q1: {
+                "Under 18": { emoji: "👧", word: "Young", imageEmoji: "🌟", continueText: "Let's continue" },
+                "18-24": { emoji: "👩", word: "Youthful", imageEmoji: "💃", continueText: "Let's continue" },
+                "25-34": { emoji: "👩‍💼", word: "Mature", imageEmoji: "🌸", continueText: "Let's continue" },
+                "35-44": { emoji: "👩‍🦳", word: "Experienced", imageEmoji: "🌿", continueText: "Let's continue" },
+                "45-54": { emoji: "👩‍🦱", word: "Wise", imageEmoji: "🌺", continueText: "Let's continue" },
+                "55+": { emoji: "👵", word: "Elegant", imageEmoji: "💎", continueText: "Let's continue" }
+            },
+            q2: { default: { emoji: "🌍", word: "Global", imageEmoji: "🗺️", continueText: "Let's continue" } },
+            q3: { default: { emoji: "🏃‍♀️", word: "Active", imageEmoji: "💪", continueText: "Let's continue" } },
+            q4: {
+                "Not important": { emoji: "🤷‍♀️", word: "Casual", imageEmoji: "😐", continueText: "Let's continue" },
+                "Slightly important": { emoji: "🤔", word: "Curious", imageEmoji: "🔍", continueText: "Let's continue" },
+                "Important": { emoji: "👍", word: "Valued", imageEmoji: "✅", continueText: "Let's continue" },
+                "Very Important": { emoji: "💚", word: "Passionate", imageEmoji: "❤️", continueText: "Let's continue" },
+                "Essential - I only buy natural/organic": { emoji: "🌱", word: "Dedicated", imageEmoji: "🌿", continueText: "Let's continue" }
+            },
+            q5: {
+                "Oily": { emoji: "💧", word: "Shiny", imageEmoji: "🌊", continueText: "Let's continue" },
+                "Dry": { emoji: "🏜️", word: "Thirsty", imageEmoji: "🌵", continueText: "Let's continue" },
+                "Combination": { emoji: "⚖️", word: "Balanced", imageEmoji: "🧘‍♀️", continueText: "Let's continue" },
+                "Normal": { emoji: "😊", word: "Perfect", imageEmoji: "🌞", continueText: "Let's continue" },
+                "Sensitive": { emoji: "🤕", word: "Gentle", imageEmoji: "🛡️", continueText: "Let's continue" }
+            },
+            q6: { default: { emoji: "💇‍♀️", word: "Stylish", imageEmoji: "✂️", continueText: "Let's continue" } },
+            q7: { default: { emoji: "🧴", word: "Caring", imageEmoji: "🧼", continueText: "Let's continue" } },
+            q8: { default: { emoji: "🧴", word: "Nurturing", imageEmoji: "💆‍♀️", continueText: "Let's continue" } },
+            q9: { default: { emoji: "🛒", word: "Shopper", imageEmoji: "🛍️", continueText: "Let's continue" } },
+            q10: {
+                "Less than 10,000 XAF / $20 AUD": { emoji: "💸", word: "Budget", imageEmoji: "🤑", continueText: "Let's continue" },
+                "10,000 - 30,000 XAF / $20 - $60 AUD": { emoji: "💰", word: "Moderate", imageEmoji: "💵", continueText: "Let's continue" },
+                "30,000 - 50,000 XAF / $60 - $100 AUD": { emoji: "💳", word: "Generous", imageEmoji: "💳", continueText: "Let's continue" },
+                "More than 50,000 XAF / $100 AUD": { emoji: "💎", word: "Luxury", imageEmoji: "👑", continueText: "Let's continue" }
+            },
+            q11: {
+                "Weekly": { emoji: "📅", word: "Frequent", imageEmoji: "🔄", continueText: "Let's continue" },
+                "Monthly": { emoji: "📆", word: "Regular", imageEmoji: "🗓️", continueText: "Let's continue" },
+                "Every 2-3 months": { emoji: "⏰", word: "Occasional", imageEmoji: "🕒", continueText: "Let's continue" },
+                "Every 4-6 months": { emoji: "🕐", word: "Selective", imageEmoji: "🕕", continueText: "Let's continue" },
+                "Only when I run out": { emoji: "🛑", word: "Practical", imageEmoji: "🚫", continueText: "Let's continue" },
+                "Rarely": { emoji: "🐌", word: "Minimalist", imageEmoji: "🦥", continueText: "Let's continue" }
+            },
+            q12: {
+                "Not appealing at all": { emoji: "😒", word: "Skeptical", imageEmoji: "🙄", continueText: "Let's continue" },
+                "Slightly appealing": { emoji: "🤨", word: "Intrigued", imageEmoji: "🧐", continueText: "Let's continue" },
+                "Neutral": { emoji: "😐", word: "Open", imageEmoji: "🤷‍♀️", continueText: "Let's continue" },
+                "Appealing": { emoji: "😊", word: "Interested", imageEmoji: "👍", continueText: "Let's continue" },
+                "Very appealing": { emoji: "😍", word: "Excited", imageEmoji: "❤️", continueText: "Let's continue" }
+            },
+            q13: { default: { emoji: "🧴", word: "Productive", imageEmoji: "🛍️", continueText: "Let's continue" } },
+            q14: {
+                "Ingredients quality": { emoji: "🌿", word: "Natural", imageEmoji: "🍃", continueText: "Let's continue" },
+                "Brand reputation": { emoji: "🏷️", word: "Trusted", imageEmoji: "⭐", continueText: "Let's continue" },
+                "Price/value": { emoji: "💰", word: "Smart", imageEmoji: "🤑", continueText: "Let's continue" },
+                "Recommendations/reviews": { emoji: "💬", word: "Social", imageEmoji: "👥", continueText: "Let's continue" },
+                "Packaging": { emoji: "📦", word: "Aesthetic", imageEmoji: "🎨", continueText: "Let's continue" },
+                "Effectiveness/results": { emoji: "🎯", word: "Results", imageEmoji: "✅", continueText: "Let's continue" },
+                "Natural/organic certification": { emoji: "🌱", word: "Organic", imageEmoji: "🌾", continueText: "Let's continue" }
+            },
+            q15: { default: { emoji: "🌸", word: "Scented", imageEmoji: "🕯️", continueText: "Let's continue" } },
+            q16: {
+                "Not important": { emoji: "🗑️", word: "Casual", imageEmoji: "🚮", continueText: "Let's continue" },
+                "Slightly important": { emoji: "🤔", word: "Aware", imageEmoji: "🌍", continueText: "Let's continue" },
+                "Important": { emoji: "♻️", word: "Eco", imageEmoji: "🌱", continueText: "Let's continue" },
+                "Very important": { emoji: "🌍", word: "Committed", imageEmoji: "💚", continueText: "Let's continue" },
+                "Essential": { emoji: "🌿", word: "Dedicated", imageEmoji: "🌳", continueText: "Let's continue" }
+            },
+            q17: { default: { emoji: "🌍", word: "African", imageEmoji: "🦁", continueText: "Let's continue" } },
+            q18: { default: { emoji: "🦘", word: "Australian", imageEmoji: "🇦🇺", continueText: "Let's continue" } },
+            q19: { default: { emoji: "💖", word: "Beneficial", imageEmoji: "🌟", continueText: "Let's continue" } },
+            q20: {
+                "Budget-friendly (under 15,000 XAF / $30 AUD)": { emoji: "💸", word: "Affordable", imageEmoji: "🤑", continueText: "Let's continue" },
+                "Mid-range (15,000-35,000 XAF / $30-$70 AUD)": { emoji: "💰", word: "Balanced", imageEmoji: "⚖️", continueText: "Let's continue" },
+                "Premium (35,000-60,000 XAF / $70-$120 AUD)": { emoji: "💳", word: "Premium", imageEmoji: "👑", continueText: "Let's continue" },
+                "Luxury (over 60,000 XAF / $120 AUD)": { emoji: "💎", word: "Luxury", imageEmoji: "🏆", continueText: "Let's continue" }
+            },
+            q21: { default: { emoji: "🎉", word: "Engaged", imageEmoji: "🎊", continueText: "Let's continue" } }
+        };
+
+        function saveProgress() {
+            localStorage.setItem('surveyAnswers', JSON.stringify(answers));
+            localStorage.setItem('currentSection', currentSectionIndex);
+            localStorage.setItem('score', score);
+            localStorage.setItem('visits', visits);
+        }
+
+        function loadProgress() {
+            const savedAnswers = localStorage.getItem('surveyAnswers');
+            if (savedAnswers) {
+                answers = JSON.parse(savedAnswers);
+            }
+            const savedSection = localStorage.getItem('currentSection');
+            if (savedSection) {
+                currentSectionIndex = parseInt(savedSection);
+            }
+            const savedScore = localStorage.getItem('score');
+            if (savedScore) {
+                score = parseInt(savedScore);
+            }
+            const savedVisits = localStorage.getItem('visits');
+            if (savedVisits) {
+                visits = parseInt(savedVisits);
+            }
+            visits++;
+            localStorage.setItem('visits', visits);
+            if (visits > 1) {
+                document.getElementById('streak-counter').style.display = 'block';
+                document.getElementById('streak-count').textContent = visits;
+            }
+        }
+
+        function validateSection() {
+            const currentSection = surveyData.sections[currentSectionIndex];
+            for (const q of currentSection.questions) {
+                if (q.required) {
+                    if (q.type === 'radio') {
+                        const checked = document.querySelector(`input[name="${q.id}"]:checked`);
+                        if (!checked) return false;
+                    } else if (q.type === 'checkbox') {
+                        const checked = document.querySelectorAll(`input[name="${q.id}"]:checked`);
+                        if (checked.length === 0) return false;
+                    } else if (q.type === 'text') {
+                        const input = document.querySelector(`input[name="${q.id}"]`);
+                        if (!input.value.trim()) return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function createConfetti() {
+            const canvas = document.createElement('canvas');
+            canvas.style.position = 'fixed';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.pointerEvents = 'none';
+            canvas.style.zIndex = '1000';
+            document.body.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const particles = [];
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: Math.random() * 5 + 5,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                    size: Math.random() * 5 + 5
+                });
+            }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                });
+                if (particles.some(p => p.y < canvas.height)) {
+                    requestAnimationFrame(animate);
+                } else {
+                    document.body.removeChild(canvas);
+                }
+            }
+            animate();
+        }
+
+        const surveyContentEl = document.getElementById('survey-content');
+        const progressBarEl = document.getElementById('progress-bar');
+        const progressTextEl = document.getElementById('progress-text');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const congratsPopup = document.getElementById('congrats-popup');
+        const mascotEmojiEl = document.getElementById('mascot-emoji');
+
+        function showFeedback(qId, selectedValue) {
+            const feedbackEl = document.getElementById(`feedback-${qId}`);
+            if (!feedbackEl) return;
+            const feedbackData = feedbackMap[qId];
+            if (!feedbackData) return;
+            let fb;
+            if (Array.isArray(selectedValue)) {
+                // For checkboxes, use default if any selected
+                fb = feedbackData.default;
+            } else if (feedbackData[selectedValue]) {
+                fb = feedbackData[selectedValue];
+            } else if (feedbackData.default) {
+                fb = feedbackData.default;
+            } else {
+                return;
+            }
+            feedbackEl.innerHTML = `
+                <div class="feedback-emoji">${fb.emoji}</div>
+                <div class="feedback-word">${fb.word}</div>
+                <div class="feedback-image">${fb.imageEmoji}</div>
+                <div class="continue-text">${fb.continueText}</div>
+            `;
+            feedbackEl.style.display = 'flex';
+        }
+
+        function renderSection() {
+            const currentSection = surveyData.sections[currentSectionIndex];
+            surveyContentEl.innerHTML = ''; // Clear previous content
+
+            // Create section container
+            const sectionContainer = document.createElement('div');
+            sectionContainer.className = 'section-container';
+
+            const sectionTitle = document.createElement('h2');
+            sectionTitle.textContent = currentSection.title;
+            sectionContainer.appendChild(sectionTitle);
+
+            if (visits > 1) {
+                const teaser = document.createElement('div');
+                teaser.innerHTML = '<p>Quick Tip: Try shea butter for dryness!</p>';
+                sectionContainer.appendChild(teaser);
+            }
+
+            currentSection.questions.forEach(q => {
+                const questionContainer = document.createElement('div');
+                questionContainer.className = 'question-container';
+
+                const questionText = document.createElement('p');
+                questionText.className = 'question-text';
+                questionText.textContent = q.text;
+                questionContainer.appendChild(questionText);
+
+                // Create options based on question type
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options-container';
+                if (q.type === 'radio') {
+                    optionsContainer.setAttribute('role', 'radiogroup');
+                } else if (q.type === 'checkbox') {
+                    optionsContainer.setAttribute('role', 'group');
+                }
+
+                if (q.type === 'radio' || q.type === 'checkbox') {
+                    q.options.forEach(option => {
+                        const label = document.createElement('label');
+                        label.className = `${q.type}-label`;
+
+                        const input = document.createElement('input');
+                        input.type = q.type;
+                        input.name = q.id;
+                        input.value = option;
+
+                        const buttonSpan = document.createElement('span');
+                        buttonSpan.className = `${q.type}-box`;
+
+                        label.appendChild(input);
+                        label.appendChild(buttonSpan);
+                        label.appendChild(document.createTextNode(option));
+
+                        optionsContainer.appendChild(label);
+
+                        // Set the selected state from `answers` object
+                        if (q.type === 'radio' && answers[q.id] === option) {
+                            input.checked = true;
+                            label.classList.add('selected');
+                        } else if (q.type === 'checkbox' && answers[q.id] && answers[q.id].includes(option)) {
+                            input.checked = true;
+                            label.classList.add('selected');
+                        }
+                    });
+                } else if (q.type === 'text') {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = q.id;
+                    input.className = 'text-input';
+                    input.value = answers[q.id] || '';
+                    input.placeholder = q.placeholder || '';
+                    if (q.required) input.setAttribute('aria-required', 'true');
+                    input.addEventListener('blur', () => {
+                        if (input.value.trim()) {
+                            showFeedback(q.id, input.value);
+                        } else {
+                            document.getElementById(`feedback-${q.id}`).style.display = 'none';
+                        }
+                    });
+                    optionsContainer.appendChild(input);
+                }
+
+                const feedbackContainer = document.createElement('div');
+                feedbackContainer.className = 'feedback-container';
+                feedbackContainer.id = `feedback-${q.id}`;
+                questionContainer.appendChild(optionsContainer);
+                questionContainer.appendChild(feedbackContainer);
+
+                if (q.extraFields) {
+                    const extraFieldsContainer = document.createElement('div');
+                    extraFieldsContainer.className = 'extra-fields-container';
+                    extraFieldsContainer.id = `extra-${q.id}`;
+                    extraFieldsContainer.innerHTML = `
+                        <div class="extra-header">If yes, please provide:</div>
+                        <label>Name:</label>
+                        <input type="text" id="name-${q.id}" value="${answers[`name-${q.id}`] || ''}" placeholder="Your full name">
+                        <label>Email:</label>
+                        <input type="email" id="email-${q.id}" value="${answers[`email-${q.id}`] || ''}" placeholder="your.email@example.com">
+                        <label>Phone number:</label>
+                        <input type="tel" id="phone-${q.id}" value="${answers[`phone-${q.id}`] || ''}" placeholder="+1234567890">
+                    `;
+                    questionContainer.appendChild(extraFieldsContainer);
+                }
+
+                // Show feedback if already answered
+                if (q.type === 'radio' && answers[q.id]) {
+                    showFeedback(q.id, answers[q.id]);
+                } else if (q.type === 'checkbox' && answers[q.id] && answers[q.id].length > 0) {
+                    showFeedback(q.id, answers[q.id]);
+                } else if (q.type === 'text' && answers[q.id]) {
+                    showFeedback(q.id, answers[q.id]);
+                }
+
+                // Show extra fields if already selected
+                if (q.extraFields && answers[q.id] && Array.isArray(answers[q.id]) && answers[q.id].some(v => v.startsWith('Yes'))) {
+                    const extraFieldElement = document.getElementById(`extra-${q.id}`);
+                    if (extraFieldElement) {
+                        extraFieldElement.style.display = 'block';
+                    }
+                }
+
+                sectionContainer.appendChild(questionContainer);
+            });
+
+            surveyContentEl.appendChild(sectionContainer);
+            updateProgressBar();
+            updateButtons();
+            updateMascotEmoji();
+            // Scroll to the first question of the new section
+            sectionContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function updateProgressBar() {
+            const totalSections = surveyData.sections.length;
+            const progressPercentage = ((currentSectionIndex + 1) / totalSections) * 100;
+            progressBarEl.style.width = `${progressPercentage}%`;
+            progressTextEl.textContent = `${currentSectionIndex + 1}/${totalSections} - Score: ${score}`;
+        }
+
+        function updateButtons() {
+            prevBtn.style.display = currentSectionIndex > 0 ? 'inline-block' : 'none';
+            if (currentSectionIndex === surveyData.sections.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function updateMascotEmoji() {
+            mascotEmojiEl.textContent = mascotEmojis[currentSectionIndex % mascotEmojis.length];
+        }
+
+        function collectAnswers() {
+            const currentSection = surveyData.sections[currentSectionIndex];
+            currentSection.questions.forEach(q => {
+                if (q.type === 'radio') {
+                    const checkedRadio = document.querySelector(`input[name="${q.id}"]:checked`);
+                    if (checkedRadio) {
+                        answers[q.id] = checkedRadio.value;
+                    }
+                } else if (q.type === 'checkbox') {
+                    const checkedCheckboxes = document.querySelectorAll(`input[name="${q.id}"]:checked`);
+                    answers[q.id] = Array.from(checkedCheckboxes).map(input => input.value);
+                } else if (q.type === 'text') {
+                    const textInput = document.querySelector(`input[name="${q.id}"]`);
+                    if (textInput) {
+                        answers[q.id] = textInput.value;
+                    }
+                }
+
+                if (q.extraFields) {
+                    const nameInput = document.getElementById(`name-${q.id}`);
+                    if (nameInput) answers[`name-${q.id}`] = nameInput.value.trim();
+                    const emailInput = document.getElementById(`email-${q.id}`);
+                    if (emailInput) answers[`email-${q.id}`] = emailInput.value.trim();
+                    const phoneInput = document.getElementById(`phone-${q.id}`);
+                    if (phoneInput) answers[`phone-${q.id}`] = phoneInput.value.trim();
+                }
+            });
+        }
+
+        function animateSection(direction) {
+            surveyContentEl.style.transition = 'none';
+            if (direction === 'next') {
+                surveyContentEl.style.transform = 'translateX(-100vw)';
+                setTimeout(() => {
+                    renderSection();
+                    surveyContentEl.style.transition = 'transform 0.6s ease-out';
+                    surveyContentEl.style.transform = 'translateX(0)';
+                }, 100);
+            } else {
+                surveyContentEl.style.transform = 'translateX(100vw)';
+                setTimeout(() => {
+                    renderSection();
+                    surveyContentEl.style.transition = 'transform 0.6s ease-out';
+                    surveyContentEl.style.transform = 'translateX(0)';
+                }, 100);
+            }
+        }
+
+        function handleNext() {
+            collectAnswers();
+            if (!validateSection()) {
+                alert('Please answer all required questions before proceeding.');
+                return;
+            }
+            score += 25;
+            saveProgress();
+            currentSectionIndex++;
+            if (currentSectionIndex === 2 || currentSectionIndex === 4) {
+                createConfetti();
+                mascotEmojiEl.textContent = '🏆';
+            }
+            animateSection('next');
+        }
+
+        function handlePrevious() {
+            collectAnswers();
+            currentSectionIndex--;
+            animateSection('prev');
+        }
+
+function handleSubmit() {
+    collectAnswers();
+    if (!validateSection()) {
+        alert('Please answer all required questions before submitting.');
+        return;
+    }
+    score += 25;
+    saveProgress();
+
+    congratsPopup.style.display = 'flex';
+
+    // Submit to Google Sheets via Google Apps Script
+    const formData = new FormData();
+    formData.append('timestamp', new Date().toISOString());
+    // --- START OF NEW CODE TO CAPTURE Q21 EXTRA FIELDS ---
+    // Only capture these fields if the user has opted in (q21 is present and says 'Yes')
+    // ... (lines before the new code block)
+
+    // --- START OF NEW CODE TO CAPTURE Q21 EXTRA FIELDS ---
+    const q21Value = Array.isArray(answers['q21']) ? answers['q21'].join(', ') : answers['q21'];
+    
+    if (q21Value && q21Value.startsWith('Yes')) {
+        // Capture the Name, Email, and Phone inputs by their unique IDs/Names
+        const nameInput = document.getElementById('optin-name');
+        const emailInput = document.getElementById('optin-email');
+        const phoneInput = document.getElementById('optin-phone');
+
+        // *** CRITICAL FIX: Add the values to the central 'answers' object ***
+        if (nameInput) {
+            // The key used here MUST match your Sheet header (optin_name)
+            answers['name-q21'] = nameInput.value || ''; 
+        }
+        if (emailInput) {
+            // The key used here MUST match your Sheet header (optin_email)
+            answers['email-q21'] = emailInput.value || '';
+        }
+        if (phoneInput) {
+            // The key used here MUST match your Sheet header (optin_phone)
+            answers['phone-q21'] = phoneInput.value || '';
+        }
+    }
+    
+// ... (The rest of your script, which sends the 'answers' object, remains the same)
+// ...
+   
+        // ... (rest of your loop remains the same) ...
+    for (const key in answers) {
+        let value = answers[key];
+        if (Array.isArray(value)) value = value.join(', ');
+        formData.append(key, value);
+    }
+
+    fetch('https://script.google.com/macros/s/AKfycbzRYBQTeuC4Hgp9-S5ILa6LguppGxb_keBHpcOipEo9oT_fwV7aWhgEc4gfO1fkQflV/exec', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Submission Success:", data);
+        congratsPopup.style.display = 'none';
+        alert("Thank you for your responses!");
+        // Reset survey state after submission
+        answers = {};
+        currentSectionIndex = 0;
+        score = 0;
+        saveProgress();
+        renderSection();
+    })
+    .catch(error => {
+        console.error("Submission Failed:", error);
+        congratsPopup.style.display = 'none';
+        alert("Submission error. Please try again.");
+    });
+}
+
+
+window.onload = function() {
+    loadProgress();
+    renderSection();
+};
+nextBtn.addEventListener('click', handleNext);
+prevBtn.addEventListener('click', handlePrevious);
+submitBtn.addEventListener('click', handleSubmit);
+
+// Option selection and animation handler
+surveyContentEl.addEventListener('click', function(e) {
+    const label = e.target.closest('label.radio-label, label.checkbox-label');
+    if (!label) return;
+    const input = label.querySelector('input');
+    if (!input) return;
+    // For radio: unselect all in group
+    if (input.type === 'radio') {
+        const radios = document.querySelectorAll(`input[name='${input.name}']`);
+        radios.forEach(radio => {
+            radio.checked = false;
+            if (radio.parentElement.classList.contains('selected')) {
+                radio.parentElement.classList.remove('selected');
+            }
+        });
+        input.checked = true;
+        label.classList.add('selected');
+        // Animation reflow
+        label.classList.remove('selected');
+        void label.offsetWidth;
+        label.classList.add('selected');
+        showFeedback(input.name, input.value);
+    } else if (input.type === 'checkbox') {
+        input.checked = !input.checked;
+        if (input.checked) {
+            label.classList.add('selected');
+            // Animation reflow
+            label.classList.remove('selected');
+            void label.offsetWidth;
+            label.classList.add('selected');
+        } else {
+            label.classList.remove('selected');
+        }
+        const checked = document.querySelectorAll(`input[name='${input.name}']:checked`);
+        const values = Array.from(checked).map(i => i.value);
+        showFeedback(input.name, values);
+
+        // Toggle extra fields for q21
+        if (input.name === 'q21') {
+            const extraEl = document.getElementById('extra-q21');
+            const yesChecked = values.some(v => v.startsWith('Yes'));
+            extraEl.style.display = yesChecked ? 'block' : 'none';
+        }
+    }
+});
+
+        // Carousel logic for header images
+const headerImages = [
+    './assets/OIP (12).jpg',
+    './assets/OIP (10).webp',
+    './assets/OIP (11).jpg'
+];
+let currentImage = 0;
+const headerImagesContainer = document.querySelector('.header-images');
+function showCarouselImage(idx) {
+    const img = headerImagesContainer.querySelector('img');
+    if (img) {
+        img.src = headerImages[idx];
+    }
+}
+function nextCarouselImage() {
+    currentImage = (currentImage + 1) % headerImages.length;
+    showCarouselImage(currentImage);
+}
+showCarouselImage(currentImage);
+setInterval(nextCarouselImage, 3000);
+    </script>
+</body>
+</html>
