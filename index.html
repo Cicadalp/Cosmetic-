@@ -126,6 +126,7 @@
         /* Gamified Mascot & Animation */
         .mascot-container {
             position: relative;
+            text-align: center;
         }
         .mascot-img {
             width: 60px;
@@ -134,10 +135,16 @@
             box-shadow: 0 2px 8px rgba(115, 149, 174, 0.15);
             background: #fff;
             padding: 8px;
+            display: block;
+            margin: 0 auto 10px;
             animation: mascot-bounce 1.2s infinite alternate;
         }
         .mascot-emoji {
-            font-size: 2.5em;
+            font-size: 4.5em;
+            display: block;
+            margin: 0 auto;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.5);
+            transform: perspective(500px) rotateY(-15deg);
             animation: mascot-emoji-pop 1.2s infinite alternate;
         }
         #streak-counter {
@@ -459,6 +466,35 @@
             margin-bottom: 20px;
         }
 
+        /* Language notification popup */
+        .lang-notify-popup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            color: #2e7d32;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15);
+            padding: 16px 24px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            animation: notify-fade-in 0.5s ease;
+        }
+        .lang-notify-text {
+            font-size: 1em;
+            font-weight: 500;
+        }
+        @keyframes notify-fade-in {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes notify-fade-out {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+        }
+
         /* Gamified congrats popup */
         .congrats-popup {
             position: fixed;
@@ -490,6 +526,42 @@
             0% { opacity: 0; transform: scale(0.7) translate(-50%, -50%); }
             100% { opacity: 1; transform: scale(1) translate(-50%, -50%); }
         }
+
+        /* Sad popup */
+        .sad-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            color: #333;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(0, 188, 212, 0.15);
+            padding: 32px 48px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: sad-pop 0.7s ease;
+        }
+        .sad-emoji {
+            font-size: 3em;
+            margin-bottom: 12px;
+            animation: sad-emoji-droop 1.2s infinite alternate;
+        }
+        .sad-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00acc1;
+        }
+        @keyframes sad-pop {
+            0% { opacity: 0; transform: scale(0.7) translate(-50%, -50%); }
+            100% { opacity: 1; transform: scale(1) translate(-50%, -50%); }
+        }
+        @keyframes sad-emoji-droop {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-5deg); }
+        }
         /* Section Image Styling */
         .section-image-container {
             margin-top: 30px;
@@ -520,9 +592,16 @@
             box-shadow: 0 4px 12px rgba(115, 149, 174, 0.15);
             animation: feedbackFadeIn 0.5s ease-out;
         }
+        .feedback-container.fade-out {
+            animation: feedbackFadeOut 0.5s ease-in;
+        }
         @keyframes feedbackFadeIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes feedbackFadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.9); }
         }
         .feedback-emoji {
             font-size: 2.5em;
@@ -577,12 +656,40 @@
             color: #ffffff; /* Change text color to white for readability */
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
         }
+
+        #lang-toggle {
+            display: block;
+            margin: 10px auto 0;
+            padding: 14px 28px;
+            background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.10);
+            transition: background 0.2s, transform 0.2s;
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { box-shadow: 0 2px 8px rgba(76, 175, 80, 0.10); }
+            50% { box-shadow: 0 2px 20px rgba(76, 175, 80, 0.50), 0 0 30px rgba(139, 195, 74, 0.30); }
+            100% { box-shadow: 0 2px 8px rgba(76, 175, 80, 0.10); }
+        }
+
+        #lang-toggle:hover {
+            background: linear-gradient(90deg, #388E3C 0%, #689F38 100%);
+            transform: scale(1.05);
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
         <div class="mascot-container">
-            <img src="./assets/react.svg" alt="Mascot" class="mascot-img">
+            
             <span class="mascot-emoji" id="mascot-emoji" role="img" aria-label="mascot">✨</span>
             <div id="streak-counter" style="display: none;">Streak: <span id="streak-count">0</span></div>
         </div>
@@ -599,6 +706,7 @@
         <div class="progress-container">
             <div id="progress-bar" class="progress-bar"></div>
             <span id="progress-text" class="progress-text">0/5</span>
+            <button id="lang-toggle" aria-label="Toggle language">Français</button>
         </div>
 
         <div class="survey-form">
@@ -612,70 +720,154 @@
 
         <div id="congrats-popup" class="congrats-popup" style="display: none;">
             <span role="img" aria-label="congrats" class="congrats-emoji">🎊</span>
-            <span class="congrats-text">Congratulations, you have completed the survey!</span>
+            <span class="congrats-text" id="congrats-text">Congratulations, you have completed the survey!</span>
+        </div>
+
+        <div id="sad-popup" class="sad-popup" style="display: none;">
+            <span role="img" aria-label="sad" class="sad-emoji">😢</span>
+            <span class="sad-text" id="sad-text">Why are you not answering all?</span>
+        </div>
+
+        <div id="lang-notify-popup" class="lang-notify-popup" style="display: none;">
+            <span class="lang-notify-text">This survey is available in English and French. Click the green button to switch languages.</span>
+        </div>
+
+        <div id="congrats-popup" class="congrats-popup" style="display: none;">
+            <span role="img" aria-label="congrats" class="congrats-emoji">🎊</span>
+            <span class="congrats-text" id="congrats-text">Congratulations, you have completed the survey!</span>
         </div>
     </div>
 
     <script>
         const surveyData = {
-            title: "Afro-Australian Cosmetic Line: Consumer Insights Survey",
-            description: "We're developing a new line of premium beauty products that blend the best natural ingredients from Africa and Australia. Your feedback will directly shape our formulations and help us create products that truly meet your needs.",
-            sections: [
-                {
-                    title: "Section 1: About You",
-                    questions: [
-                        { id: "q1", text: "1. Age Group:", type: "radio", options: ["Under 18", "18-24", "25-34", "35-44", "45-54", "55+"], required: true },
-                        { id: "q2", text: "2. Location:", type: "text", placeholder: "e.g., Cameroon, Australia", required: true },
-                        { id: "q3", text: "3. Which best describes your lifestyle? (Select all that apply)", type: "checkbox", options: ["Busy & always on-the-go", "Health and wellness focused", "Minimalist / simple", "Active / sporty", "Trend-conscious / fashionable", "Other:"], required: true },
-                        { id: "q4", text: "4. How important are natural and organic ingredients to you?", type: "radio", options: ["Not important", "Slightly important", "Important", "Very Important", "Essential - I only buy natural/organic"], required: true }
-                    ]
-                },
-                {
-                    title: "Section 2: Your Skin & Hair Profile",
-                    questions: [
-                        { id: "q5", text: "5. What is your skin type?", type: "radio", options: ["Oily", "Dry", "Combination", "Normal", "Sensitive"], required: true },
-                        { id: "q6", text: "6. What is your hair type/texture?", type: "text", placeholder: "e.g., Curly, Straight, Wavy", required: true },
-                        { id: "q7", text: "7. What are your TOP 3 skin concerns? (Select up to 3)", type: "checkbox", options: ["Acne/breakouts", "Dark spots/hyperpigmentation", "Dryness/flakiness", "Oiliness/shine", "Fine lines/wrinkles", "Dullness", "Redness/irritation", "Large pores", "Uneven skin tone", "Other:"], required: true },
-                        { id: "q8", text: "8. What are your TOP 3 hair concerns? (Select up to 3)", type: "checkbox", options: ["Dryness", "Breakage/split ends", "Scalp issues (dandruff, itchiness)", "Slow growth", "Lack of curl definition", "Frizz", "Damage from heat/chemicals", "Thinning", "Tangling", "Other:"], required: true }
-                    ]
-                },
-                {
-                    title: "Section 3: Your Beauty Habits",
-                    questions: [
-                        { id: "q9", text: "9. Where do you typically shop for beauty products? (Select all that apply)", type: "checkbox", options: ["Pharmacies/drugstores", "Beauty salons", "Supermarkets", "Online marketplaces (Amazon, Jumia, etc.)", "Brand websites", "Social media sellers", "Local markets", "Specialty beauty stores", "Department stores"], required: true },
-                        { id: "q10", text: "10. On average, how much do you spend monthly on skincare AND haircare?", type: "radio", options: ["Less than 10,000 XAF / $20 AUD", "10,000 - 30,000 XAF / $20 - $60 AUD", "30,000 - 50,000 XAF / $60 - $100 AUD", "More than 50,000 XAF / $100 AUD"], required: true },
-                        { id: "q11", text: "11. How often do you purchase new beauty products?", type: "radio", options: ["Weekly", "Monthly", "Every 2-3 months", "Every 4-6 months", "Only when I run out", "Rarely"], required: true }
-                    ]
-                },
-                {
-                    title: "Section 4: Product Preferences",
-                    questions: [
-                        { id: "q12", text: "12. How appealing is the concept of combining African & Australian natural ingredients?", type: "radio", options: ["Not appealing at all", "Slightly appealing", "Neutral", "Appealing", "Very appealing"], required: true },
-                        { id: "q13", text: "13. Which product types interest you most? (Rank your top 3)", type: "checkbox", options: ["Moisturizing creams/lotions", "Hair growth serums/oils", "Shampoo & conditioner sets", "Face masks", "Body butters/scrubs", "Scalp treatments", "Leave-in conditioners", "Cleansers & toners", "Styling products", "Lip care"], required: true },
-                        { id: "q14", text: "14. What's MOST important when choosing beauty products?", type: "radio", options: ["Ingredients quality", "Brand reputation", "Price/value", "Recommendations/reviews", "Packaging", "Effectiveness/results", "Natural/organic certification"], required: true },
-                        { id: "q15", text: "15. What scent profiles do you prefer? (Select all that apply)", type: "checkbox", options: ["Fresh & herbal (eucalyptus, mint, tea tree)", "Floral (lavender, rose, jasmine)", "Woody & earthy (sandalwood, cedarwood)", "Fruity & sweet (coconut, vanilla, citrus)", "Unscented/fragrance-free"], required: true },
-                        { id: "q16", text: "16. How important is eco-friendly/sustainable packaging?", type: "radio", options: ["Not important", "Slightly important", "Important", "Very important", "Essential"], required: true }
-                    ]
-                },
-                {
-                    title: "Section 5: The Afro-Australian Concept",
-                    questions: [
-                        { id: "q17", text: "17. What African ingredients are you most familiar with? (Select all that apply)", type: "checkbox", options: ["Shea butter", "Baobab oil", "Marula oil", "Argan oil", "African black soap", "Cocoa butter", "Other:"], required: true },
-                        { id: "q18", text: "18. What Australian ingredients interest you most? (Select all that apply)", type: "checkbox", options: ["Tea tree oil", "Macadamia oil", "Kakadu plum", "Eucalyptus", "Emu oil", "Other:"], required: true },
-                        { id: "q19", text: "19. What benefits are most important in your beauty products? (Select top 3)", type: "checkbox", options: ["Deep hydration/moisture", "Natural healing properties", "Anti-aging effects", "Brightening/even tone", "Soothing sensitive skin", "Strengthening hair", "Protecting from environmental damage", "Lightweight feel (not greasy)", "Quick absorption", "Long-lasting results"], required: true },
-                        { id: "q20", text: "20. What price point feels right for premium natural products?", type: "radio", options: ["Budget-friendly (under 15,000 XAF / $30 AUD)", "Mid-range (15,000-35,000 XAF / $30-$70 AUD)", "Premium (35,000-60,000 XAF / $70-$120 AUD)", "Luxury (over 60,000 XAF / $120 AUD)"], required: true },
-                        { id: "q21", text: "21. Would you like to participate further?", type: "checkbox", options: ["Yes, I'd like to be a product tester", "Yes, I'm interested in the Beauty Ambassador contest", "Yes, notify me when products launch", "No, just completing the survey"], extraFields: true, required: true }
-                    ]
-                }
-            ]
+            en: {
+                title: "Afro-Australian Cosmetic Line: Consumer Insights Survey",
+                description: "We're developing a new line of premium beauty products that blend the best natural ingredients from Africa and Australia. Your feedback will directly shape our formulations and help us create products that truly meet your needs.",
+                sections: [
+                    {
+                        title: "Section 1: About You",
+                        questions: [
+                            { id: "q1", text: "1. Age Group:", type: "radio", options: ["Under 18", "18-24", "25-34", "35-44", "45-54", "55+"], required: true },
+                            { id: "q2", text: "2. Location:", type: "text", placeholder: "e.g., Cameroon, Australia", required: true },
+                            { id: "q3", text: "3. Which best describes your lifestyle? (Select all that apply)", type: "checkbox", options: ["Busy & always on-the-go", "Health and wellness focused", "Minimalist / simple", "Active / sporty", "Trend-conscious / fashionable", "Other:"], required: true },
+                            { id: "q4", text: "4. How important are natural and organic ingredients to you?", type: "radio", options: ["Not important", "Slightly important", "Important", "Very Important", "Essential - I only buy natural/organic"], required: true }
+                        ]
+                    },
+                    {
+                        title: "Section 2: Your Skin & Hair Profile",
+                        questions: [
+                            { id: "q5", text: "5. What is your skin type?", type: "radio", options: ["Oily", "Dry", "Combination", "Normal", "Sensitive"], required: true },
+                            { id: "q6", text: "6. What is your hair type/texture?", type: "text", placeholder: "e.g., Curly, Straight, Wavy", required: true },
+                            { id: "q7", text: "7. What are your TOP 3 skin concerns? (Select up to 3)", type: "checkbox", options: ["Acne/breakouts", "Dark spots/hyperpigmentation", "Dryness/flakiness", "Oiliness/shine", "Fine lines/wrinkles", "Dullness", "Redness/irritation", "Large pores", "Uneven skin tone", "Other:"], required: true },
+                            { id: "q8", text: "8. What are your TOP 3 hair concerns? (Select up to 3)", type: "checkbox", options: ["Dryness", "Breakage/split ends", "Scalp issues (dandruff, itchiness)", "Slow growth", "Lack of curl definition", "Frizz", "Damage from heat/chemicals", "Thinning", "Tangling", "Other:"], required: true }
+                        ]
+                    },
+                    {
+                        title: "Section 3: Your Beauty Habits",
+                        questions: [
+                            { id: "q9", text: "9. Where do you typically shop for beauty products? (Select all that apply)", type: "checkbox", options: ["Pharmacies/drugstores", "Beauty salons", "Supermarkets", "Online marketplaces (Amazon, Jumia, etc.)", "Brand websites", "Social media sellers", "Local markets", "Specialty beauty stores", "Department stores"], required: true },
+                            { id: "q10", text: "10. On average, how much do you spend monthly on skincare AND haircare?", type: "radio", options: ["Less than 10,000 XAF / $20 AUD", "10,000 - 30,000 XAF / $20 - $60 AUD", "30,000 - 50,000 XAF / $60 - $100 AUD", "More than 50,000 XAF / $100 AUD"], required: true },
+                            { id: "q11", text: "11. How often do you purchase new beauty products?", type: "radio", options: ["Weekly", "Monthly", "Every 2-3 months", "Every 4-6 months", "Only when I run out", "Rarely"], required: true }
+                        ]
+                    },
+                    {
+                        title: "Section 4: Product Preferences",
+                        questions: [
+                            { id: "q12", text: "12. How appealing is the concept of combining African & Australian natural ingredients?", type: "radio", options: ["Not appealing at all", "Slightly appealing", "Neutral", "Appealing", "Very appealing"], required: true },
+                            { id: "q13", text: "13. Which product types interest you most? (Rank your top 3)", type: "checkbox", options: ["Moisturizing creams/lotions", "Hair growth serums/oils", "Shampoo & conditioner sets", "Face masks", "Body butters/scrubs", "Scalp treatments", "Leave-in conditioners", "Cleansers & toners", "Styling products", "Lip care"], required: true },
+                            { id: "q14", text: "14. What's MOST important when choosing beauty products?", type: "radio", options: ["Ingredients quality", "Brand reputation", "Price/value", "Recommendations/reviews", "Packaging", "Effectiveness/results", "Natural/organic certification"], required: true },
+                            { id: "q15", text: "15. What scent profiles do you prefer? (Select all that apply)", type: "checkbox", options: ["Fresh & herbal (eucalyptus, mint, tea tree)", "Floral (lavender, rose, jasmine)", "Woody & earthy (sandalwood, cedarwood)", "Fruity & sweet (coconut, vanilla, citrus)", "Unscented/fragrance-free"], required: true },
+                            { id: "q16", text: "16. How important is eco-friendly/sustainable packaging?", type: "radio", options: ["Not important", "Slightly important", "Important", "Very important", "Essential"], required: true }
+                        ]
+                    },
+                    {
+                        title: "Section 5: The Afro-Australian Concept",
+                        questions: [
+                            { id: "q17", text: "17. What African ingredients are you most familiar with? (Select all that apply)", type: "checkbox", options: ["Shea butter", "Baobab oil", "Marula oil", "Argan oil", "African black soap", "Cocoa butter", "Other:"], required: true },
+                            { id: "q18", text: "18. What Australian ingredients interest you most? (Select all that apply)", type: "checkbox", options: ["Tea tree oil", "Macadamia oil", "Kakadu plum", "Eucalyptus", "Emu oil", "Other:"], required: true },
+                            { id: "q19", text: "19. What benefits are most important in your beauty products? (Select top 3)", type: "checkbox", options: ["Deep hydration/moisture", "Natural healing properties", "Anti-aging effects", "Brightening/even tone", "Soothing sensitive skin", "Strengthening hair", "Protecting from environmental damage", "Lightweight feel (not greasy)", "Quick absorption", "Long-lasting results"], required: true },
+                            { id: "q20", text: "20. What price point feels right for premium natural products?", type: "radio", options: ["Budget-friendly (under 15,000 XAF / $30 AUD)", "Mid-range (15,000-35,000 XAF / $30-$70 AUD)", "Premium (35,000-60,000 XAF / $70-$120 AUD)", "Luxury (over 60,000 XAF / $120 AUD)"], required: true },
+                            { id: "q21", text: "21. Would you like to participate further?", type: "checkbox", options: ["Yes, I'd like to be a product tester", "Yes, I'm interested in the Beauty Ambassador contest", "Yes, notify me when products launch", "No, just completing the survey"], extraFields: true, required: true }
+                        ]
+                    }
+                ]
+            },
+            fr: {
+                title: "Ligne Cosmétique Afro-Australienne : Enquête sur les Consommateurs",
+                description: "Nous développons une nouvelle ligne de produits de beauté haut de gamme qui allie les meilleurs ingrédients naturels d'Afrique et d'Australie. Vos retours façonneront directement nos formulations et nous aideront à créer des produits qui répondent vraiment à vos besoins.",
+                sections: [
+                    {
+                        title: "Section 1 : À propos de vous",
+                        questions: [
+                            { id: "q1", text: "1. Groupe d'âge :", type: "radio", options: ["Moins de 18 ans", "18-24", "25-34", "35-44", "45-54", "55+"], required: true },
+                            { id: "q2", text: "2. Localisation :", type: "text", placeholder: "ex. : Cameroun, Australie", required: true },
+                            { id: "q3", text: "3. Lequel décrit le mieux votre style de vie ? (Sélectionnez tout ce qui s'applique)", type: "checkbox", options: ["Occupé et toujours en déplacement", "Axé sur la santé et le bien-être", "Minimaliste / simple", "Actif / sportif", "Conscient des tendances / à la mode", "Autre :"], required: true },
+                            { id: "q4", text: "4. Quelle importance accordez-vous aux ingrédients naturels et biologiques ?", type: "radio", options: ["Pas important", "Légèrement important", "Important", "Très important", "Essentiel - Je n'achète que naturel/biologique"], required: true }
+                        ]
+                    },
+                    {
+                        title: "Section 2 : Votre profil de peau et de cheveux",
+                        questions: [
+                            { id: "q5", text: "5. Quel est votre type de peau ?", type: "radio", options: ["Grasse", "Sèche", "Mixte", "Normale", "Sensible"], required: true },
+                            { id: "q6", text: "6. Quel est votre type/texture de cheveux ?", type: "text", placeholder: "ex. : Bouclés, Raides, Ondulés", required: true },
+                            { id: "q7", text: "7. Quelles sont vos 3 principales préoccupations cutanées ? (Sélectionnez jusqu'à 3)", type: "checkbox", options: ["Acné/éruptions", "Taches foncées/hyperpigmentation", "Sécheresse/peau qui pèle", "Brillance/peau grasse", "Rides/ridules", "Teint terne", "Rougeurs/irritations", "Pores dilatés", "Teint irrégulier", "Autre :"], required: true },
+                            { id: "q8", text: "8. Quelles sont vos 3 principales préoccupations capillaires ? (Sélectionnez jusqu'à 3)", type: "checkbox", options: ["Sécheresse", "Casse/pointes fourchues", "Problèmes de cuir chevelu (pellicules, démangeaisons)", "Croissance lente", "Manque de définition des boucles", "Frisottis", "Dommages causés par la chaleur/produits chimiques", "Amincissement", "Emmêlements", "Autre :"], required: true }
+                        ]
+                    },
+                    {
+                        title: "Section 3 : Vos habitudes de beauté",
+                        questions: [
+                            { id: "q9", text: "9. Où achetez-vous généralement vos produits de beauté ? (Sélectionnez tout ce qui s'applique)", type: "checkbox", options: ["Pharmacies/parapharmacies", "Salons de beauté", "Supermarchés", "Marchés en ligne (Amazon, Jumia, etc.)", "Sites de marques", "Vendeurs sur les réseaux sociaux", "Marchés locaux", "Magasins de beauté spécialisés", "Grands magasins"], required: true },
+                            { id: "q10", text: "10. En moyenne, combien dépensez-vous par mois pour les soins de la peau ET des cheveux ?", type: "radio", options: ["Moins de 10 000 XAF / 20 $ AUD", "10 000 - 30 000 XAF / 20 - 60 $ AUD", "30 000 - 50 000 XAF / 60 - 100 $ AUD", "Plus de 50 000 XAF / 100 $ AUD"], required: true },
+                            { id: "q11", text: "11. À quelle fréquence achetez-vous de nouveaux produits de beauté ?", type: "radio", options: ["Hebdomadaire", "Mensuel", "Tous les 2-3 mois", "Tous les 4-6 mois", "Seulement quand j'en manque", "Rarement"], required: true }
+                        ]
+                    },
+                    {
+                        title: "Section 4 : Préférences de produits",
+                        questions: [
+                            { id: "q12", text: "12. Quelle est l'attractivité du concept de combiner des ingrédients naturels africains et australiens ?", type: "radio", options: ["Pas du tout attractif", "Légèrement attractif", "Neutre", "Attractif", "Très attractif"], required: true },
+                            { id: "q13", text: "13. Quels types de produits vous intéressent le plus ? (Classez vos 3 préférés)", type: "checkbox", options: ["Crèmes/lotions hydratantes", "Sérums/huiles pour la croissance des cheveux", "Ensembles shampooing & après-shampooing", "Masques pour le visage", "Beurres/gommages pour le corps", "Soins du cuir chevelu", "Après-shampooings sans rinçage", "Nettoyants & toniques", "Produits coiffants", "Soins des lèvres"], required: true },
+                            { id: "q14", text: "14. Qu'est-ce qui est le PLUS important lors du choix des produits de beauté ?", type: "radio", options: ["Qualité des ingrédients", "Réputation de la marque", "Prix/valeur", "Recommandations/avis", "Emballage", "Efficacité/résultats", "Certification naturelle/biologique"], required: true },
+                            { id: "q15", text: "15. Quels profils de parfum préférez-vous ? (Sélectionnez tout ce qui s'applique)", type: "checkbox", options: ["Frais & herbacé (eucalyptus, menthe, arbre à thé)", "Floral (lavande, rose, jasmin)", "Boisé & terreux (bois de santal, cèdre)", "Fruité & sucré (noix de coco, vanille, agrumes)", "Sans parfum/fragrance"], required: true },
+                            { id: "q16", text: "16. Quelle importance accordez-vous à un emballage écologique/durable ?", type: "radio", options: ["Pas important", "Légèrement important", "Important", "Très important", "Essentiel"], required: true }
+                        ]
+                    },
+                    {
+                        title: "Section 5 : Le concept Afro-Australien",
+                        questions: [
+                            { id: "q17", text: "17. Quels ingrédients africains connaissez-vous le mieux ? (Sélectionnez tout ce qui s'applique)", type: "checkbox", options: ["Beurre de karité", "Huile de baobab", "Huile de marula", "Huile d'argan", "Savon noir africain", "Beurre de cacao", "Autre :"], required: true },
+                            { id: "q18", text: "18. Quels ingrédients australiens vous intéressent le plus ? (Sélectionnez tout ce qui s'applique)", type: "checkbox", options: ["Huile d'arbre à thé", "Huile de macadamia", "Prune Kakadu", "Eucalyptus", "Huile d'émeu", "Autre :"], required: true },
+                            { id: "q19", text: "19. Quels bénéfices sont les plus importants dans vos produits de beauté ? (Sélectionnez les 3 principaux)", type: "checkbox", options: ["Hydratation/profonde", "Propriétés naturelles cicatrisantes", "Effets anti-âge", "Éclaircissant/teint uniforme", "Apaisant pour peau sensible", "Renforcement des cheveux", "Protection contre les agressions environnementales", "Sensation légère (non grasse)", "Absorption rapide", "Résultats durables"], required: true },
+                            { id: "q20", text: "20. Quel prix vous semble adapté pour des produits naturels haut de gamme ?", type: "radio", options: ["Abordable (moins de 15 000 XAF / 30 $ AUD)", "Moyenne gamme (15 000-35 000 XAF / 30-70 $ AUD)", "Premium (35 000-60 000 XAF / 70-120 $ AUD)", "Luxe (plus de 60 000 XAF / 120 $ AUD)"], required: true },
+                            { id: "q21", text: "21. Souhaitez-vous participer davantage ?", type: "checkbox", options: ["Oui, je souhaite être testeur de produit", "Oui, je suis intéressé par le concours Ambassadeur de Beauté", "Oui, prévenez-moi lors du lancement des produits", "Non, je complète juste l'enquête"], extraFields: true, required: true }
+                        ]
+                    }
+                ]
+            }
         };
 
+        let currentLang = 'en';
         let currentSectionIndex = 0;
         let answers = {};
         let score = 0;
         let visits = 0;
 
         const mascotEmojis = ["✨", "💄", "👑", "💖", "🌸", "🧖‍♀️", "💅", "👩🏾‍🦱", "👩🏽‍🦱", "💁🏾‍♀️", "💁🏽‍♀️"];
+
+        const buttonTexts = {
+            en: { prev: 'Previous', next: 'Next', submit: 'Submit' },
+            fr: { prev: 'Précédent', next: 'Suivant', submit: 'Soumettre' }
+        };
+
+        const congratsTexts = {
+            en: 'Congratulations, you have completed the survey!',
+            fr: 'Bravo, tu as terminé !'
+        };
+
+        const alertTexts = {
+            en: { success: 'Thank you for your responses!', error: 'Submission error. Please try again.' },
+            fr: { success: 'Merci pour vos réponses !', error: 'Erreur lors de la soumission. Veuillez réessayer.' }
+        };
 
         // Feedback mappings for each question
         const feedbackMap = {
@@ -685,7 +877,8 @@
                 "25-34": { emoji: "👩‍💼", word: "Mature", imageEmoji: "🌸", continueText: "Let's continue" },
                 "35-44": { emoji: "👩‍🦳", word: "Experienced", imageEmoji: "🌿", continueText: "Let's continue" },
                 "45-54": { emoji: "👩‍🦱", word: "Wise", imageEmoji: "🌺", continueText: "Let's continue" },
-                "55+": { emoji: "👵", word: "Elegant", imageEmoji: "💎", continueText: "Let's continue" }
+                "55+": { emoji: "👵", word: "Elegant", imageEmoji: "💎", continueText: "Let's continue" },
+                default: { emoji: "👧", word: "Young", imageEmoji: "🌟", continueText: "Let's continue" }
             },
             q2: { default: { emoji: "🌍", word: "Global", imageEmoji: "🗺️", continueText: "Let's continue" } },
             q3: { default: { emoji: "🏃‍♀️", word: "Active", imageEmoji: "💪", continueText: "Let's continue" } },
@@ -694,14 +887,16 @@
                 "Slightly important": { emoji: "🤔", word: "Curious", imageEmoji: "🔍", continueText: "Let's continue" },
                 "Important": { emoji: "👍", word: "Valued", imageEmoji: "✅", continueText: "Let's continue" },
                 "Very Important": { emoji: "💚", word: "Passionate", imageEmoji: "❤️", continueText: "Let's continue" },
-                "Essential - I only buy natural/organic": { emoji: "🌱", word: "Dedicated", imageEmoji: "🌿", continueText: "Let's continue" }
+                "Essential - I only buy natural/organic": { emoji: "🌱", word: "Dedicated", imageEmoji: "🌿", continueText: "Let's continue" },
+                default: { emoji: "🌱", word: "Natural", imageEmoji: "🌿", continueText: "Let's continue" }
             },
             q5: {
                 "Oily": { emoji: "💧", word: "Shiny", imageEmoji: "🌊", continueText: "Let's continue" },
                 "Dry": { emoji: "🏜️", word: "Thirsty", imageEmoji: "🌵", continueText: "Let's continue" },
                 "Combination": { emoji: "⚖️", word: "Balanced", imageEmoji: "🧘‍♀️", continueText: "Let's continue" },
                 "Normal": { emoji: "😊", word: "Perfect", imageEmoji: "🌞", continueText: "Let's continue" },
-                "Sensitive": { emoji: "🤕", word: "Gentle", imageEmoji: "🛡️", continueText: "Let's continue" }
+                "Sensitive": { emoji: "🤕", word: "Gentle", imageEmoji: "🛡️", continueText: "Let's continue" },
+                default: { emoji: "😊", word: "Perfect", imageEmoji: "🌞", continueText: "Let's continue" }
             },
             q6: { default: { emoji: "💇‍♀️", word: "Stylish", imageEmoji: "✂️", continueText: "Let's continue" } },
             q7: { default: { emoji: "🧴", word: "Caring", imageEmoji: "🧼", continueText: "Let's continue" } },
@@ -711,7 +906,8 @@
                 "Less than 10,000 XAF / $20 AUD": { emoji: "💸", word: "Budget", imageEmoji: "🤑", continueText: "Let's continue" },
                 "10,000 - 30,000 XAF / $20 - $60 AUD": { emoji: "💰", word: "Moderate", imageEmoji: "💵", continueText: "Let's continue" },
                 "30,000 - 50,000 XAF / $60 - $100 AUD": { emoji: "💳", word: "Generous", imageEmoji: "💳", continueText: "Let's continue" },
-                "More than 50,000 XAF / $100 AUD": { emoji: "💎", word: "Luxury", imageEmoji: "👑", continueText: "Let's continue" }
+                "More than 50,000 XAF / $100 AUD": { emoji: "💎", word: "Luxury", imageEmoji: "👑", continueText: "Let's continue" },
+                default: { emoji: "💰", word: "Moderate", imageEmoji: "💵", continueText: "Let's continue" }
             },
             q11: {
                 "Weekly": { emoji: "📅", word: "Frequent", imageEmoji: "🔄", continueText: "Let's continue" },
@@ -719,14 +915,16 @@
                 "Every 2-3 months": { emoji: "⏰", word: "Occasional", imageEmoji: "🕒", continueText: "Let's continue" },
                 "Every 4-6 months": { emoji: "🕐", word: "Selective", imageEmoji: "🕕", continueText: "Let's continue" },
                 "Only when I run out": { emoji: "🛑", word: "Practical", imageEmoji: "🚫", continueText: "Let's continue" },
-                "Rarely": { emoji: "🐌", word: "Minimalist", imageEmoji: "🦥", continueText: "Let's continue" }
+                "Rarely": { emoji: "🐌", word: "Minimalist", imageEmoji: "🦥", continueText: "Let's continue" },
+                default: { emoji: "📆", word: "Regular", imageEmoji: "🗓️", continueText: "Let's continue" }
             },
             q12: {
                 "Not appealing at all": { emoji: "😒", word: "Skeptical", imageEmoji: "🙄", continueText: "Let's continue" },
                 "Slightly appealing": { emoji: "🤨", word: "Intrigued", imageEmoji: "🧐", continueText: "Let's continue" },
                 "Neutral": { emoji: "😐", word: "Open", imageEmoji: "🤷‍♀️", continueText: "Let's continue" },
                 "Appealing": { emoji: "😊", word: "Interested", imageEmoji: "👍", continueText: "Let's continue" },
-                "Very appealing": { emoji: "😍", word: "Excited", imageEmoji: "❤️", continueText: "Let's continue" }
+                "Very appealing": { emoji: "😍", word: "Excited", imageEmoji: "❤️", continueText: "Let's continue" },
+                default: { emoji: "😊", word: "Interested", imageEmoji: "👍", continueText: "Let's continue" }
             },
             q13: { default: { emoji: "🧴", word: "Productive", imageEmoji: "🛍️", continueText: "Let's continue" } },
             q14: {
@@ -736,7 +934,8 @@
                 "Recommendations/reviews": { emoji: "💬", word: "Social", imageEmoji: "👥", continueText: "Let's continue" },
                 "Packaging": { emoji: "📦", word: "Aesthetic", imageEmoji: "🎨", continueText: "Let's continue" },
                 "Effectiveness/results": { emoji: "🎯", word: "Results", imageEmoji: "✅", continueText: "Let's continue" },
-                "Natural/organic certification": { emoji: "🌱", word: "Organic", imageEmoji: "🌾", continueText: "Let's continue" }
+                "Natural/organic certification": { emoji: "🌱", word: "Organic", imageEmoji: "🌾", continueText: "Let's continue" },
+                default: { emoji: "🌿", word: "Natural", imageEmoji: "🍃", continueText: "Let's continue" }
             },
             q15: { default: { emoji: "🌸", word: "Scented", imageEmoji: "🕯️", continueText: "Let's continue" } },
             q16: {
@@ -744,7 +943,8 @@
                 "Slightly important": { emoji: "🤔", word: "Aware", imageEmoji: "🌍", continueText: "Let's continue" },
                 "Important": { emoji: "♻️", word: "Eco", imageEmoji: "🌱", continueText: "Let's continue" },
                 "Very important": { emoji: "🌍", word: "Committed", imageEmoji: "💚", continueText: "Let's continue" },
-                "Essential": { emoji: "🌿", word: "Dedicated", imageEmoji: "🌳", continueText: "Let's continue" }
+                "Essential": { emoji: "🌿", word: "Dedicated", imageEmoji: "🌳", continueText: "Let's continue" },
+                default: { emoji: "♻️", word: "Eco", imageEmoji: "🌱", continueText: "Let's continue" }
             },
             q17: { default: { emoji: "🌍", word: "African", imageEmoji: "🦁", continueText: "Let's continue" } },
             q18: { default: { emoji: "🦘", word: "Australian", imageEmoji: "🇦🇺", continueText: "Let's continue" } },
@@ -753,7 +953,8 @@
                 "Budget-friendly (under 15,000 XAF / $30 AUD)": { emoji: "💸", word: "Affordable", imageEmoji: "🤑", continueText: "Let's continue" },
                 "Mid-range (15,000-35,000 XAF / $30-$70 AUD)": { emoji: "💰", word: "Balanced", imageEmoji: "⚖️", continueText: "Let's continue" },
                 "Premium (35,000-60,000 XAF / $70-$120 AUD)": { emoji: "💳", word: "Premium", imageEmoji: "👑", continueText: "Let's continue" },
-                "Luxury (over 60,000 XAF / $120 AUD)": { emoji: "💎", word: "Luxury", imageEmoji: "🏆", continueText: "Let's continue" }
+                "Luxury (over 60,000 XAF / $120 AUD)": { emoji: "💎", word: "Luxury", imageEmoji: "🏆", continueText: "Let's continue" },
+                default: { emoji: "💰", word: "Balanced", imageEmoji: "⚖️", continueText: "Let's continue" }
             },
             q21: { default: { emoji: "🎉", word: "Engaged", imageEmoji: "🎊", continueText: "Let's continue" } }
         };
@@ -791,7 +992,7 @@
         }
 
         function validateSection() {
-            const currentSection = surveyData.sections[currentSectionIndex];
+            const currentSection = surveyData[currentLang].sections[currentSectionIndex];
             for (const q of currentSection.questions) {
                 if (q.required) {
                     if (q.type === 'radio') {
@@ -853,6 +1054,14 @@
             animate();
         }
 
+        function showSadPopup() {
+            const sadText = currentLang === 'en' ? 'Why are you not answering all?' : 'Pourquoi ne réponds-tu pas à tout ?';
+            document.getElementById('sad-text').textContent = sadText;
+            const popup = document.getElementById('sad-popup');
+            popup.style.display = 'flex';
+            setTimeout(() => { popup.style.display = 'none'; }, 3000);
+        }
+
         const surveyContentEl = document.getElementById('survey-content');
         const progressBarEl = document.getElementById('progress-bar');
         const progressTextEl = document.getElementById('progress-text');
@@ -885,10 +1094,25 @@
                 <div class="continue-text">${fb.continueText}</div>
             `;
             feedbackEl.style.display = 'flex';
+            // Auto-hide after 1 second with fade-out
+            setTimeout(() => {
+                feedbackEl.classList.add('fade-out');
+                setTimeout(() => {
+                    feedbackEl.style.display = 'none';
+                    feedbackEl.classList.remove('fade-out');
+                }, 500);
+            }, 1000);
+        }
+
+        function updateHeader() {
+            const header = document.querySelector('.header-content h1');
+            const desc = document.querySelector('.header-content p');
+            header.textContent = surveyData[currentLang].title;
+            desc.textContent = surveyData[currentLang].description;
         }
 
         function renderSection() {
-            const currentSection = surveyData.sections[currentSectionIndex];
+            const currentSection = surveyData[currentLang].sections[currentSectionIndex];
             surveyContentEl.innerHTML = ''; // Clear previous content
 
             // Create section container
@@ -976,17 +1200,24 @@
                 questionContainer.appendChild(feedbackContainer);
 
                 if (q.extraFields) {
+                    const extraHeaderText = currentLang === 'en' ? 'If yes, please provide:' : 'Si oui, veuillez fournir :';
+                    const nameLabel = currentLang === 'en' ? 'Name:' : 'Nom :';
+                    const emailLabel = currentLang === 'en' ? 'Email:' : 'Email :';
+                    const phoneLabel = currentLang === 'en' ? 'Phone number:' : 'Numéro de téléphone :';
+                    const namePlaceholder = currentLang === 'en' ? 'Your full name' : 'Votre nom complet';
+                    const emailPlaceholder = currentLang === 'en' ? 'your.email@example.com' : 'votre.email@example.com';
+                    const phonePlaceholder = '+1234567890';
                     const extraFieldsContainer = document.createElement('div');
                     extraFieldsContainer.className = 'extra-fields-container';
                     extraFieldsContainer.id = `extra-${q.id}`;
                     extraFieldsContainer.innerHTML = `
-                        <div class="extra-header">If yes, please provide:</div>
-                        <label>Name:</label>
-                        <input type="text" id="name-${q.id}" value="${answers[`name-${q.id}`] || ''}" placeholder="Your full name">
-                        <label>Email:</label>
-                        <input type="email" id="email-${q.id}" value="${answers[`email-${q.id}`] || ''}" placeholder="your.email@example.com">
-                        <label>Phone number:</label>
-                        <input type="tel" id="phone-${q.id}" value="${answers[`phone-${q.id}`] || ''}" placeholder="+1234567890">
+                        <div class="extra-header">${extraHeaderText}</div>
+                        <label>${nameLabel}</label>
+                        <input type="text" id="name-${q.id}" value="${answers[`name-${q.id}`] || ''}" placeholder="${namePlaceholder}">
+                        <label>${emailLabel}</label>
+                        <input type="email" id="email-${q.id}" value="${answers[`email-${q.id}`] || ''}" placeholder="${emailPlaceholder}">
+                        <label>${phoneLabel}</label>
+                        <input type="tel" id="phone-${q.id}" value="${answers[`phone-${q.id}`] || ''}" placeholder="${phonePlaceholder}">
                     `;
                     questionContainer.appendChild(extraFieldsContainer);
                 }
@@ -1001,7 +1232,7 @@
                 }
 
                 // Show extra fields if already selected
-                if (q.extraFields && answers[q.id] && Array.isArray(answers[q.id]) && answers[q.id].some(v => v.startsWith('Yes'))) {
+                if (q.extraFields && answers[q.id] && Array.isArray(answers[q.id]) && answers[q.id].some(v => v.startsWith('Yes') || v.startsWith('Oui'))) {
                     const extraFieldElement = document.getElementById(`extra-${q.id}`);
                     if (extraFieldElement) {
                         extraFieldElement.style.display = 'block';
@@ -1020,15 +1251,18 @@
         }
 
         function updateProgressBar() {
-            const totalSections = surveyData.sections.length;
+            const totalSections = surveyData[currentLang].sections.length;
             const progressPercentage = ((currentSectionIndex + 1) / totalSections) * 100;
             progressBarEl.style.width = `${progressPercentage}%`;
             progressTextEl.textContent = `${currentSectionIndex + 1}/${totalSections} - Score: ${score}`;
         }
 
         function updateButtons() {
+            prevBtn.textContent = buttonTexts[currentLang].prev;
+            nextBtn.textContent = buttonTexts[currentLang].next;
+            submitBtn.textContent = buttonTexts[currentLang].submit;
             prevBtn.style.display = currentSectionIndex > 0 ? 'inline-block' : 'none';
-            if (currentSectionIndex === surveyData.sections.length - 1) {
+            if (currentSectionIndex === surveyData[currentLang].sections.length - 1) {
                 nextBtn.style.display = 'none';
                 submitBtn.style.display = 'inline-block';
             } else {
@@ -1042,7 +1276,7 @@
         }
 
         function collectAnswers() {
-            const currentSection = surveyData.sections[currentSectionIndex];
+            const currentSection = surveyData[currentLang].sections[currentSectionIndex];
             currentSection.questions.forEach(q => {
                 if (q.type === 'radio') {
                     const checkedRadio = document.querySelector(`input[name="${q.id}"]:checked`);
@@ -1092,8 +1326,7 @@
         function handleNext() {
             collectAnswers();
             if (!validateSection()) {
-                alert('Please answer all required questions before proceeding.');
-                return;
+                showSadPopup();
             }
             score += 25;
             saveProgress();
@@ -1114,41 +1347,38 @@
 function handleSubmit() {
     collectAnswers();
     if (!validateSection()) {
-        alert('Please answer all required questions before submitting.');
-        return;
+        showSadPopup();
     }
     score += 25;
     saveProgress();
 
+    document.getElementById('congrats-text').textContent = congratsTexts[currentLang];
     congratsPopup.style.display = 'flex';
 
     // Submit to Google Sheets via Google Apps Script
     const formData = new FormData();
     formData.append('timestamp', new Date().toISOString());
     // --- START OF NEW CODE TO CAPTURE Q21 EXTRA FIELDS ---
-    // Only capture these fields if the user has opted in (q21 is present and says 'Yes')
+    // Only capture these fields if the user has opted in (q21 is present and says 'Yes' or 'Oui')
     // ... (lines before the new code block)
 
     // --- START OF NEW CODE TO CAPTURE Q21 EXTRA FIELDS ---
     const q21Value = Array.isArray(answers['q21']) ? answers['q21'].join(', ') : answers['q21'];
-    
-    if (q21Value && q21Value.startsWith('Yes')) {
-        // Capture the Name, Email, and Phone inputs by their unique IDs/Names
-        const nameInput = document.getElementById('optin-name');
-        const emailInput = document.getElementById('optin-email');
-        const phoneInput = document.getElementById('optin-phone');
+
+    if (q21Value && (q21Value.includes('Yes') || q21Value.includes('Oui'))) {
+        // Capture the Name, Email, and Phone inputs by their unique IDs
+        const nameInput = document.getElementById('name-q21');
+        const emailInput = document.getElementById('email-q21');
+        const phoneInput = document.getElementById('phone-q21');
 
         // *** CRITICAL FIX: Add the values to the central 'answers' object ***
         if (nameInput) {
-            // The key used here MUST match your Sheet header (optin_name)
-            answers['name-q21'] = nameInput.value || ''; 
+            answers['name-q21'] = nameInput.value || '';
         }
         if (emailInput) {
-            // The key used here MUST match your Sheet header (optin_email)
             answers['email-q21'] = emailInput.value || '';
         }
         if (phoneInput) {
-            // The key used here MUST match your Sheet header (optin_phone)
             answers['phone-q21'] = phoneInput.value || '';
         }
     }
@@ -1176,7 +1406,7 @@ function handleSubmit() {
     .then(data => {
         console.log("Submission Success:", data);
         congratsPopup.style.display = 'none';
-        alert("Thank you for your responses!");
+        alert(alertTexts[currentLang].success);
         // Reset survey state after submission
         answers = {};
         currentSectionIndex = 0;
@@ -1187,64 +1417,78 @@ function handleSubmit() {
     .catch(error => {
         console.error("Submission Failed:", error);
         congratsPopup.style.display = 'none';
-        alert("Submission error. Please try again.");
+        alert(alertTexts[currentLang].error);
     });
 }
 
 
 window.onload = function() {
     loadProgress();
+    updateHeader();
     renderSection();
+    // Show language notification popup for 5 seconds on site entry
+    const langPopup = document.getElementById('lang-notify-popup');
+    langPopup.style.display = 'flex';
+    setTimeout(() => {
+        langPopup.style.display = 'none';
+    }, 5000);
 };
 nextBtn.addEventListener('click', handleNext);
 prevBtn.addEventListener('click', handlePrevious);
 submitBtn.addEventListener('click', handleSubmit);
 
-// Option selection and animation handler
-surveyContentEl.addEventListener('click', function(e) {
-    const label = e.target.closest('label.radio-label, label.checkbox-label');
-    if (!label) return;
-    const input = label.querySelector('input');
-    if (!input) return;
-    // For radio: unselect all in group
-    if (input.type === 'radio') {
-        const radios = document.querySelectorAll(`input[name='${input.name}']`);
-        radios.forEach(radio => {
-            radio.checked = false;
-            if (radio.parentElement.classList.contains('selected')) {
-                radio.parentElement.classList.remove('selected');
+document.getElementById('lang-toggle').addEventListener('click', function() {
+    currentLang = currentLang === 'en' ? 'fr' : 'en';
+    this.textContent = currentLang === 'en' ? 'Français' : 'English';
+    updateHeader();
+    renderSection();
+});
+
+        // Option selection and animation handler
+        surveyContentEl.addEventListener('click', function(e) {
+            const label = e.target.closest('label.radio-label, label.checkbox-label');
+            if (!label) return;
+            const input = label.querySelector('input');
+            if (!input) return;
+            // For radio: unselect all in group
+            if (input.type === 'radio') {
+                const radios = document.querySelectorAll(`input[name='${input.name}']`);
+                radios.forEach(radio => {
+                    radio.checked = false;
+                    if (radio.parentElement.classList.contains('selected')) {
+                        radio.parentElement.classList.remove('selected');
+                    }
+                });
+                input.checked = true;
+                label.classList.add('selected');
+                // Animation reflow
+                label.classList.remove('selected');
+                void label.offsetWidth;
+                label.classList.add('selected');
+                showFeedback(input.name, input.value);
+            } else if (input.type === 'checkbox') {
+                input.checked = !input.checked;
+                if (input.checked) {
+                    label.classList.add('selected');
+                    // Animation reflow
+                    label.classList.remove('selected');
+                    void label.offsetWidth;
+                    label.classList.add('selected');
+                } else {
+                    label.classList.remove('selected');
+                }
+                const checked = document.querySelectorAll(`input[name='${input.name}']:checked`);
+                const values = Array.from(checked).map(i => i.value);
+                showFeedback(input.name, values);
+
+                // Toggle extra fields for q21
+                if (input.name === 'q21') {
+                    const extraEl = document.getElementById('extra-q21');
+                    const yesChecked = values.some(v => v.startsWith('Yes') || v.startsWith('Oui'));
+                    extraEl.style.display = yesChecked ? 'block' : 'none';
+                }
             }
         });
-        input.checked = true;
-        label.classList.add('selected');
-        // Animation reflow
-        label.classList.remove('selected');
-        void label.offsetWidth;
-        label.classList.add('selected');
-        showFeedback(input.name, input.value);
-    } else if (input.type === 'checkbox') {
-        input.checked = !input.checked;
-        if (input.checked) {
-            label.classList.add('selected');
-            // Animation reflow
-            label.classList.remove('selected');
-            void label.offsetWidth;
-            label.classList.add('selected');
-        } else {
-            label.classList.remove('selected');
-        }
-        const checked = document.querySelectorAll(`input[name='${input.name}']:checked`);
-        const values = Array.from(checked).map(i => i.value);
-        showFeedback(input.name, values);
-
-        // Toggle extra fields for q21
-        if (input.name === 'q21') {
-            const extraEl = document.getElementById('extra-q21');
-            const yesChecked = values.some(v => v.startsWith('Yes'));
-            extraEl.style.display = yesChecked ? 'block' : 'none';
-        }
-    }
-});
 
         // Carousel logic for header images
 const headerImages = [
