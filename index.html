@@ -451,6 +451,12 @@
             background: linear-gradient(90deg, #4e5d6c 0%, #7395ae 100%);
             transform: scale(1.09);
         }
+        .button-container button:disabled {
+            background: red !important;
+            color: white !important;
+            cursor: not-allowed !important;
+            animation: none;
+        }
         @keyframes btn-pop {
             0% { transform: scale(1); }
             100% { transform: scale(1.07); }
@@ -1434,9 +1440,21 @@
         }
 
 function handleSubmit() {
+    // Disable the submit button immediately to prevent multiple submissions
+    submitBtn.disabled = true;
+    submitBtn.style.backgroundColor = 'red';
+    submitBtn.style.color = 'white';
+    submitBtn.textContent = 'Submitting...';
+
     collectAnswers();
     if (!validateSection()) {
         showSadPopup();
+        // Re-enable the button if validation fails
+        submitBtn.disabled = false;
+        submitBtn.style.backgroundColor = '';
+        submitBtn.style.color = '';
+        submitBtn.textContent = buttonTexts[currentLang].submit;
+        return;
     }
     score += 25;
     saveProgress();
@@ -1471,10 +1489,10 @@ function handleSubmit() {
             answers['phone-q21'] = phoneInput.value || '';
         }
     }
-    
+
 // ... (The rest of your script, which sends the 'answers' object, remains the same)
 // ...
-   
+
         // ... (rest of your loop remains the same) ...
     for (const key in answers) {
         let value = answers[key];

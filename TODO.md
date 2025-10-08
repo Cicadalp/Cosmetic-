@@ -4,3 +4,4 @@
 - [x] Remove the old #lang-notify-popup div and related JS
 - [x] Update #lang-toggle button to switch languages after selection
 - [x] Improve responsiveness of language selection buttons: change to flex layout, stack vertically on small screens, add fade-in animation
+- [x] Modify submit button to disable immediately on click, turn red, and re-enable if validation fails to prevent multiple submissions
