@@ -3,3 +3,4 @@
 - [x] Update JS: On window.onload, show overlay and hide main content; on language button click, set currentLang, hide overlay, show main content, update header and render section
 - [x] Remove the old #lang-notify-popup div and related JS
 - [x] Update #lang-toggle button to switch languages after selection
+- [x] Improve responsiveness of language selection buttons: change to flex layout, stack vertically on small screens, add fade-in animation

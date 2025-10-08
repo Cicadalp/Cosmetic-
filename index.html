@@ -706,14 +706,18 @@
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        .language-selection-content h1 {
+    .language-selection-content h1 {
             margin-bottom: 30px;
             font-size: 2em;
             color: var(--primary-color);
         }
+        .language-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
         .language-selection-content button {
-            position: absolute;
-            margin: 10px;
             padding: 15px 30px;
             font-size: 18px;
             cursor: pointer;
@@ -721,20 +725,46 @@
             border-radius: 10px;
             background: linear-gradient(90deg, #7395ae 0%, #b0c4de 100%);
             color: white;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            animation: buttonFadeIn 0.5s ease-out;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         .language-selection-content button:hover {
             transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
-        #select-en {
-            top: 50%;
-            left: 30%;
-            transform: translate(-50%, -50%);
+        .language-selection-content button:nth-child(1) {
+            animation-delay: 0.1s;
         }
-        #select-fr {
-            top: 50%;
-            right: 30%;
-            transform: translate(50%, -50%);
+        .language-selection-content button:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        @keyframes buttonFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 600px) {
+            .language-selection-content {
+                padding: 20px;
+            }
+            .language-selection-content h1 {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+            .language-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .language-selection-content button {
+                width: 100%;
+                max-width: 200px;
+            }
         }
     </style>
 </head>
@@ -742,8 +772,10 @@
     <div class="language-selection-overlay" id="language-overlay">
         <div class="language-selection-content">
             <h1>Select Your Language</h1>
-            <button id="select-en">English</button>
-            <button id="select-fr">Français</button>
+            <div class="language-buttons">
+                <button id="select-en">English</button>
+                <button id="select-fr">Français</button>
+            </div>
         </div>
     </div>
     <div class="app-container">
