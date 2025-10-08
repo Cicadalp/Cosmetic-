@@ -684,9 +684,68 @@
             transform: scale(1.05);
             animation-play-state: paused;
         }
+
+        /* Language selection overlay */
+        .language-selection-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .language-selection-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .language-selection-content h1 {
+            margin-bottom: 30px;
+            font-size: 2em;
+            color: var(--primary-color);
+        }
+        .language-selection-content button {
+            position: absolute;
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #7395ae 0%, #b0c4de 100%);
+            color: white;
+            transition: transform 0.2s;
+        }
+        .language-selection-content button:hover {
+            transform: scale(1.05);
+        }
+        #select-en {
+            top: 50%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+        }
+        #select-fr {
+            top: 50%;
+            right: 30%;
+            transform: translate(50%, -50%);
+        }
     </style>
 </head>
 <body>
+    <div class="language-selection-overlay" id="language-overlay">
+        <div class="language-selection-content">
+            <h1>Select Your Language</h1>
+            <button id="select-en">English</button>
+            <button id="select-fr">Français</button>
+        </div>
+    </div>
     <div class="app-container">
         <div class="mascot-container">
             
@@ -728,9 +787,7 @@
             <span class="sad-text" id="sad-text">Why are you not answering all?</span>
         </div>
 
-        <div id="lang-notify-popup" class="lang-notify-popup" style="display: none;">
-            <span class="lang-notify-text">This survey is available in English and French. Click the green button to switch languages.</span>
-        </div>
+
 
         <div id="congrats-popup" class="congrats-popup" style="display: none;">
             <span role="img" aria-label="congrats" class="congrats-emoji">🎊</span>
@@ -1422,17 +1479,12 @@ function handleSubmit() {
 }
 
 
-window.onload = function() {
-    loadProgress();
-    updateHeader();
-    renderSection();
-    // Show language notification popup for 5 seconds on site entry
-    const langPopup = document.getElementById('lang-notify-popup');
-    langPopup.style.display = 'flex';
-    setTimeout(() => {
-        langPopup.style.display = 'none';
-    }, 5000);
-};
+    window.onload = function() {
+        loadProgress();
+        // Show language selection overlay and hide main content initially
+        document.getElementById('language-overlay').style.display = 'flex';
+        document.querySelector('.app-container').style.display = 'none';
+    };
 nextBtn.addEventListener('click', handleNext);
 prevBtn.addEventListener('click', handlePrevious);
 submitBtn.addEventListener('click', handleSubmit);
@@ -1440,6 +1492,22 @@ submitBtn.addEventListener('click', handleSubmit);
 document.getElementById('lang-toggle').addEventListener('click', function() {
     currentLang = currentLang === 'en' ? 'fr' : 'en';
     this.textContent = currentLang === 'en' ? 'Français' : 'English';
+    updateHeader();
+    renderSection();
+});
+
+document.getElementById('select-en').addEventListener('click', function() {
+    currentLang = 'en';
+    document.getElementById('language-overlay').style.display = 'none';
+    document.querySelector('.app-container').style.display = 'block';
+    updateHeader();
+    renderSection();
+});
+
+document.getElementById('select-fr').addEventListener('click', function() {
+    currentLang = 'fr';
+    document.getElementById('language-overlay').style.display = 'none';
+    document.querySelector('.app-container').style.display = 'block';
     updateHeader();
     renderSection();
 });

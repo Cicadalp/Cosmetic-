@@ -1,2 +1,5 @@
-- [x] Modify handleSubmit function in index.html to reset survey state after successful submission
-- [ ] Test the fix by launching the app and verifying questions appear after reload
+- [x] Add language selection overlay HTML div at top of body
+- [x] Update CSS for .language-selection-overlay: full screen, backdrop blur, buttons absolute positioning
+- [x] Update JS: On window.onload, show overlay and hide main content; on language button click, set currentLang, hide overlay, show main content, update header and render section
+- [x] Remove the old #lang-notify-popup div and related JS
+- [x] Update #lang-toggle button to switch languages after selection
